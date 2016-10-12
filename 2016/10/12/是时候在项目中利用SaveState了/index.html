@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -84,15 +84,25 @@
 
 
 
-<meta name="description" content="各种杂七杂八的技术">
-<meta property="og:type" content="website">
-<meta property="og:title" content="黄怡菲的博客">
-<meta property="og:url" content="http://www.huangyifei.info/index.html">
+<meta name="description" content="是时候在项目中利用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
+本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
+什">
+<meta property="og:type" content="article">
+<meta property="og:title" content="是时候在项目中利用SaveState了">
+<meta property="og:url" content="http://www.huangyifei.info/2016/10/12/是时候在项目中利用SaveState了/index.html">
 <meta property="og:site_name" content="黄怡菲的博客">
-<meta property="og:description" content="各种杂七杂八的技术">
+<meta property="og:description" content="是时候在项目中利用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
+本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
+什">
+<meta property="og:updated_time" content="2016-10-12T14:06:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="黄怡菲的博客">
-<meta name="twitter:description" content="各种杂七杂八的技术">
+<meta name="twitter:title" content="是时候在项目中利用SaveState了">
+<meta name="twitter:description" content="是时候在项目中利用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
+本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
+什">
 
 
 
@@ -113,10 +123,10 @@
 
 
 
-  <link rel="canonical" href="http://www.huangyifei.info/"/>
+  <link rel="canonical" href="http://www.huangyifei.info/2016/10/12/是时候在项目中利用SaveState了/"/>
 
 
-  <title> 黄怡菲的博客 </title>
+  <title> 是时候在项目中利用SaveState了 | 黄怡菲的博客 </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -137,9 +147,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
@@ -226,9 +234,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -248,10 +256,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/10/12/是时候在项目中利用SaveState了/" itemprop="url">
-                  是时候在项目中利用SaveState了
-                </a>
+                是时候在项目中利用SaveState了
               
             
           </h1>
@@ -291,9 +296,7 @@
       
 
       
-        
-          
-            <h1 id="是时候在项目中利用SaveState了"><a href="#是时候在项目中利用SaveState了" class="headerlink" title="是时候在项目中利用SaveState了"></a>是时候在项目中利用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
+        <h1 id="是时候在项目中利用SaveState了"><a href="#是时候在项目中利用SaveState了" class="headerlink" title="是时候在项目中利用SaveState了"></a>是时候在项目中利用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
 <p>这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。</p>
 <p>本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过</p>
 <h2 id="什么是SaveState"><a href="#什么是SaveState" class="headerlink" title="什么是SaveState"></a>什么是SaveState</h2><p>要了解什么是SaveState必须要先知道<code>Activity</code>的两个关键方法</p>
@@ -376,36 +379,45 @@
 <p>关于这些问题，需要分析源码才能找到答案，但我不希望这篇文章变成对Android源码的一次分析。我将在下篇文章，继续介绍怎么处理SaveState。</p>
 <p>当然，即使没有SaveState在5.0上带来的好处，正确处理页面的SaveState也是保证Android应用程序健壮性的一个重要部分。</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
       
 
       
+
       
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -413,6 +425,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -432,8 +448,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/BloodOnTrack.jpeg"
@@ -476,6 +501,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#是时候在项目中利用SaveState了"><span class="nav-number">1.</span> <span class="nav-text">是时候在项目中利用SaveState了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是SaveState"><span class="nav-number">1.1.</span> <span class="nav-text">什么是SaveState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onSaveInstanceState时系统做了些什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">onSaveInstanceState时系统做了些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onRestoreInstanceState时系统做了些什么"><span class="nav-number">1.1.2.</span> <span class="nav-text">onRestoreInstanceState时系统做了些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Window在save和restore时对View的处理"><span class="nav-number">1.1.3.</span> <span class="nav-text">Window在save和restore时对View的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么现在是时候利用SaveState"><span class="nav-number">1.2.</span> <span class="nav-text">为什么现在是时候利用SaveState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么很多人不重视SaveState"><span class="nav-number">1.2.1.</span> <span class="nav-text">为什么很多人不重视SaveState</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-0的新机制"><span class="nav-number">1.2.2.</span> <span class="nav-text">5.0的新机制</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -572,6 +608,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
 
   
 
