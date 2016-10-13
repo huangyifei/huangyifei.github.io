@@ -249,8 +249,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/12/是时候在项目中利用SaveState了/" itemprop="url">
-                  是时候在项目中利用SaveState了
+                <a class="post-title-link" href="/2016/10/12/是时候使用SaveState了/" itemprop="url">
+                  是时候使用SaveState了
                 </a>
               
             
@@ -293,7 +293,7 @@
       
         
           
-            <h1 id="是时候在项目中利用SaveState了"><a href="#是时候在项目中利用SaveState了" class="headerlink" title="是时候在项目中利用SaveState了"></a>是时候在项目中利用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
+            <h1 id="是时候使用SaveState了"><a href="#是时候使用SaveState了" class="headerlink" title="是时候使用SaveState了"></a>是时候使用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
 <p>这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。</p>
 <p>本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过</p>
 <h2 id="什么是SaveState"><a href="#什么是SaveState" class="headerlink" title="什么是SaveState"></a>什么是SaveState</h2><p>要了解什么是SaveState必须要先知道<code>Activity</code>的两个关键方法</p>
@@ -330,7 +330,7 @@
 <li>被保存的View不会被自动创建，只是通过id获取savedInstance用于更新View</li>
 </ol>
 <p>关于SaveState的详细介绍可以参考文章<a href="http://www.jianshu.com/p/520e6b47c57b" target="_blank" rel="external">Android中SaveState原理分析</a></p>
-<h2 id="为什么现在是时候利用SaveState"><a href="#为什么现在是时候利用SaveState" class="headerlink" title="为什么现在是时候利用SaveState"></a>为什么现在是时候利用SaveState</h2><h3 id="为什么很多人不重视SaveState"><a href="#为什么很多人不重视SaveState" class="headerlink" title="为什么很多人不重视SaveState"></a>为什么很多人不重视SaveState</h3><p>我们先了解下会用到Restore机制的地方</p>
+<h2 id="为什么开始使用SaveState"><a href="#为什么开始使用SaveState" class="headerlink" title="为什么开始使用SaveState"></a>为什么开始使用SaveState</h2><h3 id="为什么很多人不重视SaveState"><a href="#为什么很多人不重视SaveState" class="headerlink" title="为什么很多人不重视SaveState"></a>为什么很多人不重视SaveState</h3><p>我们先了解下会用到Restore机制的地方</p>
 <ol>
 <li><code>FragmentStatePagerAdapter</code>用于在ViewPager中使用可回收和重建的<code>Fragment</code></li>
 <li><p>应用Crash时，当前页面被销毁，前一个页面被Restore</p>

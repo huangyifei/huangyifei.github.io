@@ -84,25 +84,25 @@
 
 
 
-<meta name="description" content="是时候在项目中利用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+<meta name="description" content="是时候使用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
 这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
 本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
-什">
+什么是Sa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="是时候在项目中利用SaveState了">
-<meta property="og:url" content="http://www.huangyifei.info/2016/10/12/是时候在项目中利用SaveState了/index.html">
+<meta property="og:title" content="是时候使用SaveState了">
+<meta property="og:url" content="http://www.huangyifei.info/2016/10/12/是时候使用SaveState了/index.html">
 <meta property="og:site_name" content="黄怡菲的博客">
-<meta property="og:description" content="是时候在项目中利用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+<meta property="og:description" content="是时候使用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
 这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
 本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
-什">
-<meta property="og:updated_time" content="2016-10-12T14:13:31.000Z">
+什么是Sa">
+<meta property="og:updated_time" content="2016-10-13T02:07:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="是时候在项目中利用SaveState了">
-<meta name="twitter:description" content="是时候在项目中利用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+<meta name="twitter:title" content="是时候使用SaveState了">
+<meta name="twitter:description" content="是时候使用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
 这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
 本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
-什">
+什么是Sa">
 
 
 
@@ -123,10 +123,10 @@
 
 
 
-  <link rel="canonical" href="http://www.huangyifei.info/2016/10/12/是时候在项目中利用SaveState了/"/>
+  <link rel="canonical" href="http://www.huangyifei.info/2016/10/12/是时候使用SaveState了/"/>
 
 
-  <title> 是时候在项目中利用SaveState了 | 黄怡菲的博客 </title>
+  <title> 是时候使用SaveState了 | 黄怡菲的博客 </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
             
             
               
-                是时候在项目中利用SaveState了
+                是时候使用SaveState了
               
             
           </h1>
@@ -296,7 +296,7 @@
       
 
       
-        <h1 id="是时候在项目中利用SaveState了"><a href="#是时候在项目中利用SaveState了" class="headerlink" title="是时候在项目中利用SaveState了"></a>是时候在项目中利用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
+        <h1 id="是时候使用SaveState了"><a href="#是时候使用SaveState了" class="headerlink" title="是时候使用SaveState了"></a>是时候使用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
 <p>这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。</p>
 <p>本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过</p>
 <h2 id="什么是SaveState"><a href="#什么是SaveState" class="headerlink" title="什么是SaveState"></a>什么是SaveState</h2><p>要了解什么是SaveState必须要先知道<code>Activity</code>的两个关键方法</p>
@@ -333,7 +333,7 @@
 <li>被保存的View不会被自动创建，只是通过id获取savedInstance用于更新View</li>
 </ol>
 <p>关于SaveState的详细介绍可以参考文章<a href="http://www.jianshu.com/p/520e6b47c57b" target="_blank" rel="external">Android中SaveState原理分析</a></p>
-<h2 id="为什么现在是时候利用SaveState"><a href="#为什么现在是时候利用SaveState" class="headerlink" title="为什么现在是时候利用SaveState"></a>为什么现在是时候利用SaveState</h2><h3 id="为什么很多人不重视SaveState"><a href="#为什么很多人不重视SaveState" class="headerlink" title="为什么很多人不重视SaveState"></a>为什么很多人不重视SaveState</h3><p>我们先了解下会用到Restore机制的地方</p>
+<h2 id="为什么开始使用SaveState"><a href="#为什么开始使用SaveState" class="headerlink" title="为什么开始使用SaveState"></a>为什么开始使用SaveState</h2><h3 id="为什么很多人不重视SaveState"><a href="#为什么很多人不重视SaveState" class="headerlink" title="为什么很多人不重视SaveState"></a>为什么很多人不重视SaveState</h3><p>我们先了解下会用到Restore机制的地方</p>
 <ol>
 <li><code>FragmentStatePagerAdapter</code>用于在ViewPager中使用可回收和重建的<code>Fragment</code></li>
 <li><p>应用Crash时，当前页面被销毁，前一个页面被Restore</p>
@@ -508,7 +508,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#是时候在项目中利用SaveState了"><span class="nav-number">1.</span> <span class="nav-text">是时候在项目中利用SaveState了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是SaveState"><span class="nav-number">1.1.</span> <span class="nav-text">什么是SaveState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onSaveInstanceState时系统做了些什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">onSaveInstanceState时系统做了些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onRestoreInstanceState时系统做了些什么"><span class="nav-number">1.1.2.</span> <span class="nav-text">onRestoreInstanceState时系统做了些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Window在save和restore时对View的处理"><span class="nav-number">1.1.3.</span> <span class="nav-text">Window在save和restore时对View的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么现在是时候利用SaveState"><span class="nav-number">1.2.</span> <span class="nav-text">为什么现在是时候利用SaveState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么很多人不重视SaveState"><span class="nav-number">1.2.1.</span> <span class="nav-text">为什么很多人不重视SaveState</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-0的新机制"><span class="nav-number">1.2.2.</span> <span class="nav-text">5.0的新机制</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#是时候使用SaveState了"><span class="nav-number">1.</span> <span class="nav-text">是时候使用SaveState了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是SaveState"><span class="nav-number">1.1.</span> <span class="nav-text">什么是SaveState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onSaveInstanceState时系统做了些什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">onSaveInstanceState时系统做了些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onRestoreInstanceState时系统做了些什么"><span class="nav-number">1.1.2.</span> <span class="nav-text">onRestoreInstanceState时系统做了些什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Window在save和restore时对View的处理"><span class="nav-number">1.1.3.</span> <span class="nav-text">Window在save和restore时对View的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么开始使用SaveState"><span class="nav-number">1.2.</span> <span class="nav-text">为什么开始使用SaveState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么很多人不重视SaveState"><span class="nav-number">1.2.1.</span> <span class="nav-text">为什么很多人不重视SaveState</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-0的新机制"><span class="nav-number">1.2.2.</span> <span class="nav-text">5.0的新机制</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
