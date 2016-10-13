@@ -304,11 +304,11 @@
 </ol>
 <p>如果我们不处理SaveState，则在恢复ActivityTwo时，列表中每一项的后缀会发生变化，如果处理SaveState，则能保证返回时页面和创建时一样。在代码中通过修改<code>ActivityTwo#ENABLE_SAVE_STATE</code>可以切换两种状态。</p>
 <p>创建时的页面：</p>
-<p><img src="../images/create.png" alt="创建时的页面"></p>
+<p><img src="/images/create.png" alt="创建时的页面"></p>
 <p>不处理SaveState恢复后的页面</p>
-<p><img src="../images/restore.png" alt="不处理SaveState恢复后的页面"></p>
+<p><img src="/images/restore.png" alt="不处理SaveState恢复后的页面"></p>
 <p>处理SaveState恢复后的页面</p>
-<p><img src="../images/create.png" alt="处理SaveState恢复后的页面"></p>
+<p><img src="/images/create.png" alt="处理SaveState恢复后的页面"></p>
 <p>SaveState的处理应该包括4个部分</p>
 <ol>
 <li>保存数据</li>
@@ -364,7 +364,7 @@
 <p>默认的每个Task都会出现在最近应用中。上述的这些情况中，都可使用<code>android:excludeFromRecents</code>避免这些Task在最近应用中出现</p>
 <p>后面单独补充了一节<strong>进程被杀</strong>的介绍，因为它很容易和<strong>Task中Activity销毁</strong>混淆</p>
 <h2 id="Task中Activity销毁-vs-进程被杀"><a href="#Task中Activity销毁-vs-进程被杀" class="headerlink" title="Task中Activity销毁 vs 进程被杀"></a>Task中Activity销毁 vs 进程被杀</h2><p>我们先看下再ActivityManagerService中进程Process和Task的关系</p>
-<p><img src="../images/Task&amp;Process.gif" alt="Task&amp;Process"></p>
+<p><img src="/images/Task&amp;Process.gif" alt="Task&amp;Process"></p>
 <ol>
 <li><code>ActivityManagerService</code>通过一个列表<code>mHistory</code>来管理所有<code>ActivityRecord</code></li>
 <li>相同<code>TaskRecord</code>中的<code>ActivityRecord</code>在列表中处于连续位置</li>
