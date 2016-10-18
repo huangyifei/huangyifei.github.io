@@ -249,6 +249,286 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/18/一次搞定Process和Task/" itemprop="url">
+                  一次搞定Process和Task
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-18T14:42:03+08:00" content="2016-10-18">
+              2016-10-18
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一次搞定Process和Task"><a href="#一次搞定Process和Task" class="headerlink" title="一次搞定Process和Task"></a>一次搞定Process和Task</h1><h2 id="关于进程－Process"><a href="#关于进程－Process" class="headerlink" title="关于进程－Process"></a>关于进程－Process</h2><h3 id="影响process的属性"><a href="#影响process的属性" class="headerlink" title="影响process的属性"></a>影响process的属性</h3><p>控制组件运行进程的有两个个属性：<code>android:process</code>和<code>android:multiprocess</code></p>
+<p>关于<code>android:process</code></p>
+<ul>
+<li>可分别指定Application和四大组件运行的进程名</li>
+<li>不指定时，使用包名作为进程名</li>
+<li>如果进程名是以冒号开头的，则这个进程是应用的私有进程</li>
+<li>如果进程名是以字符开头的，且符合包名规范，则这个进程是全局的</li>
+</ul>
+<p>只有provider和activity定义了<code>android:multiprocess</code>，但不要在activity中使用。</p>
+<p>如果<code>android:multiprocess</code>为true，则每个访问provider的应用都会自己创建一个ContentProvider实例</p>
+<ul>
+<li>优势：避免跨进程通信，提高数据访问效率</li>
+<li>弊端：多个实例导致系统内存消耗变大，且难以处理多个进程之间的数据同步问题</li>
+</ul>
+<p>如果需要两个不同APK中的组件运行于同一个进程，需要以下三个条件：</p>
+<ul>
+<li>两个应用程序使用相同的<code>android:sharedUserId</code></li>
+<li>两个应用使用相同的keystore进行签名</li>
+<li>为组件设置相同的<code>android:process</code></li>
+</ul>
+<h3 id="不同Process带来的影响"><a href="#不同Process带来的影响" class="headerlink" title="不同Process带来的影响"></a>不同Process带来的影响</h3><h4 id="跨进程通信"><a href="#跨进程通信" class="headerlink" title="跨进程通信"></a>跨进程通信</h4><p>由于不同的进程使用不同的内存空间，所以不同进程之间的通信本质上只依赖以下四种方式</p>
+<ul>
+<li>Binder：包括Messenger、AIDL，只能传递基本数据类型或实现了Parcelable的对象，本质是数据的序列化和反序列化</li>
+<li>Intent：跨进程的组件调用，本质也是数据的序列化和反序列化</li>
+<li>ASHMEM：匿名共享内存，需要依赖Binder传递共享内存文件描述，使用系统签名的APK才能直接使用</li>
+<li>其他通用方式：共享文件、网络接口等</li>
+</ul>
+<p>ContentProvider的实现就是使用ASHMEM</p>
+<ul>
+<li>ContentProvider保存的数据，都是以私有文件存储的，其他进程无法访问</li>
+<li>其他程序创建CursorWindow时，同时创建了一块匿名共享内存，并实现了Parcelable</li>
+<li>通过Binder将CursorWindow和共享内存文件描述传递给ContentProvider</li>
+<li>ContentProvider创建自己的共享内存文件描述，并指向共享内存</li>
+</ul>
+<h4 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a>进程优先级</h4><p>内存不足时，系统可能杀掉进程，这时进程中的Application和应用组件也会随之销毁。系统如何选择停止的进程，就涉及到进程优先级了。</p>
+<ol>
+<li>前台进程 Activte process<ul>
+<li>前台响应用户事件的Activity以及与之绑定的Service</li>
+<li>startForeground的Service</li>
+<li>正在执行onStart，onCreate，OnDestroy的Service</li>
+<li>正在执行onReceive的BroadcastReceiver</li>
+</ul>
+</li>
+<li>可见进程 Visible Process<ul>
+<li>onPause但未onStop的Activity</li>
+<li>绑定到可见Activity的Service</li>
+</ul>
+</li>
+<li>服务进程 Service process<ul>
+<li>普通Service</li>
+</ul>
+</li>
+<li>背景进程 Background process<ul>
+<li>onStop的Activity</li>
+</ul>
+</li>
+<li>空进程 Empty process<ul>
+<li>不包含任何组件的进程</li>
+</ul>
+</li>
+</ol>
+<h3 id="Process的实际使用"><a href="#Process的实际使用" class="headerlink" title="Process的实际使用"></a>Process的实际使用</h3><ol>
+<li>子进程可以分担主进程的内存压力</li>
+<li>在主进程Crash时，子进程中的功能不受影响</li>
+<li>子进程的<code>Application#onCreate</code>中可以跳过一些不必要的初始化</li>
+</ol>
+<h2 id="关于任务－Task"><a href="#关于任务－Task" class="headerlink" title="关于任务－Task"></a>关于任务－Task</h2><p>关于Task，有太多的参数与之相关，而且他们相互影响，感觉无法穷尽。下面仅从实际的使用出发，明确和Task相关的一些原则。</p>
+<h3 id="Task和startActivityForResult"><a href="#Task和startActivityForResult" class="headerlink" title="Task和startActivityForResult"></a>Task和startActivityForResult</h3><p>使用startActivityForResult的必要条件是被启动的Activity和原Activity要在同一个Task中。因此，使用startActivityForResult时，会强制将新启动的Activity放在原来的Task中，不论activiy的xml属性和<code>Intent#Flag_XXX</code>。</p>
+<p><strong><em>只有一个例外<code>FLAG_ACTIVITY_NEW_TASK</code></em></strong>：如果使用这个标签，原Activity会立刻收到onActivityResult，并执行和startActivity相同的逻辑。在后面的分析中可以看到，仅凭这个FLAG是无法正真启动新Task的。</p>
+<h3 id="多Task有关的参数"><a href="#多Task有关的参数" class="headerlink" title="多Task有关的参数"></a>多Task有关的参数</h3><p>可以下载多Task相关的<a href="https://github.com/huangyifei/AndroidExample/tree/MultipleTask" target="_blank" rel="external">演示代码</a>，修改MultiTaskActivity启动方法的Intent和Manifest中的属性，就可演示这小结的大部分例子。</p>
+<h4 id="launchMode"><a href="#launchMode" class="headerlink" title="launchMode"></a>launchMode</h4><ol>
+<li><code>standard</code>和<code>singleTop</code>：可以包含多个Activity实例</li>
+<li><code>singleInstance</code>和<code>singleTask</code>：只有一个Activity实例</li>
+<li><code>singleInstance</code>是一个Task中<strong><em>唯一</em></strong>的Activity</li>
+<li><code>singleTask</code>不一定是Task root（google文档有问题，但使用中建议作为Task root使用）</li>
+</ol>
+<h4 id="taskAffinity"><a href="#taskAffinity" class="headerlink" title="taskAffinity"></a>taskAffinity</h4><ol>
+<li>仅有<code>singleInstance</code>启动新Task不依赖<code>taskAffinity</code></li>
+<li><code>singleTask</code>的Activity只有其<code>taskAffinity</code>和原Activity不一样时才会启动新Task</li>
+<li><code>standard</code>和<code>singleTop</code>启动新Task，不仅要求新的<code>taskAffinity</code>，而且需要<code>FLAG_ACTIVITY_NEW_TASK</code></li>
+<li>如果有后台Task和要启动的Activity具有相同的<code>taskAffinity</code>，则不会启动新的Task，而是将后台Task切换到前台，并根据其他属性和标签重新安排后台Task中的Activity和新Activity</li>
+<li>taskAffinity的值应该是以‘.’开头的字符串</li>
+</ol>
+<h4 id="其他多Task属性和标签"><a href="#其他多Task属性和标签" class="headerlink" title="其他多Task属性和标签"></a>其他多Task属性和标签</h4><p>只有<code>standard</code>和<code>singleTop</code>类型的Activity才可能出现多个实例。因此，只有这两类Activity才可能出现多个实例，并处于不同的Task中。下面的讨论，也仅限于这两类。</p>
+<ul>
+<li>FLAG_ACTIVITY_NEW_DOCUMENT<ul>
+<li>如果已经有Activity符合Intent，则切换到该Activity</li>
+<li>否则启动新的Activity</li>
+</ul>
+</li>
+<li>FLAG_ACTIVITY_MULTIPLE_TASK<ul>
+<li>配合FLAG_ACTIVITY_NEW_TASK和FLAG_ACTIVITY_NEW_DOCUMENT使用，在启动时不再寻找匹配的Activity，而是直接启动新任务。</li>
+</ul>
+</li>
+<li>documentLaunchMode：与前面两个标签相互限制。<ul>
+<li>always：每次启动时都会启动新的Task。等同于FLAG_ACTIVITY_NEW_DOCUMENT和FLAG_ACTIVITY_MULTIPLE_TASK</li>
+<li>intoExisting：如果有符合Intent的Activity存在，则不再启动新Task，否则启动新Task。等同于FLAG_ACTIVITY_NEW_DOCUMENT，且不带FLAG_ACTIVITY_MULTIPLE_TASK</li>
+<li>none：默认值。由其他标签和属性决定是否启动新Task。</li>
+<li>never：使FLAG_ACTIVITY_NEW_DOCUMENT和FLAG_ACTIVITY_MULTIPLE_TASK失效。</li>
+</ul>
+</li>
+</ul>
+<p>FLAG_ACTIVITY_NEW_DOCUMENT和documentLaunchMode都是5.0的新特性。通过FLAG_ACTIVITY_NEW_DOCUMENT启动一个新的Task，不需要指定<code>taskAffinity</code>。因此，最好不要将taskAffinity与FLAG_ACTIVITY_NEW_DOCUMENT混用。</p>
+<p>在实测中发现，never无法使FLAG_ACTIVITY_NEW_DOCUMENT失效，只是使FLAG_ACTIVITY_MULTIPLE_TASK失效。</p>
+<h3 id="Task相关的其他参数"><a href="#Task相关的其他参数" class="headerlink" title="Task相关的其他参数"></a>Task相关的其他参数</h3><p>这部分的参数主要处理以下两个问题，演示代码不包括这部分的例子。</p>
+<ul>
+<li>Task在最近任务中的表现</li>
+<li>一个新Activity进入已有的Task时，如何重新安排Task中的老Activity和新Activity</li>
+</ul>
+<h4 id="其它xml元素"><a href="#其它xml元素" class="headerlink" title="其它xml元素"></a>其它xml元素</h4><ol>
+<li><code>alllowTaskReparenting</code>：默认false，只有standard和singleTop有效，表示Activity实例可以换到其他Task中。（通过应用图标启动程序时会生效，在程序内通过FLAG_ACTIVITY_NEW_TASK切换任务时，不生效）例子：浏览器。</li>
+<li><code>finishOnTaskLaunch</code>：默认false，通过应用图标重新启动程序时，这个Activity会被销毁。</li>
+<li><code>clearTaskOnLaunch</code>：用于Task root，默认false，启动时会清空Task上的其它Activity，只保留root。（通过应用图标启动程序时会生效，通过最近任务启动时不生效）</li>
+<li><code>alwaysRetainTaskState</code>：用于Task root，默认false，在应用切换到后台30分钟后会被系统清理。如果为true则不会被系统清理</li>
+<li><code>noHistory</code>:页面不可见时被自动销毁，不会保存在<code>mHistory</code>中</li>
+</ol>
+<h4 id="其他Intent-FLAG"><a href="#其他Intent-FLAG" class="headerlink" title="其他Intent.FLAG"></a>其他Intent.FLAG</h4><ol>
+<li>FLAG_ACTIVITY_CLEAR_TOP：启动的Activity存在，则不创建新实例，而是使用原有实例，并清空上面的其它Activity。在Activity是singleTask，或者Intent中有FLAG_ACTIVITY_SINGLE_TOP，这个Activity不会重新创建。</li>
+<li>FLAG_ACTIVITY_REORDER_TO_FRONT：Activity会重新排序，任何Activity都不会被销毁。</li>
+<li>FLAG_ACTIVITY_NO_HISTORY：和xml中的<code>noHistory</code>效果相同</li>
+<li>FLAG_ACTIVITY_TASK_ON_HOME：后退时直接回Home，而不会回到之前的Task</li>
+</ol>
+<h2 id="Task和Process的关系"><a href="#Task和Process的关系" class="headerlink" title="Task和Process的关系"></a>Task和Process的关系</h2><p>之前文章的<a href="http://huangyifei.info/2016/10/13/%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86SaveState/" target="_blank" rel="external">《怎么处理SaveState》</a>的末尾也提到的Task和Process的关系。这里重复一遍。</p>
+<p>我们先看下再ActivityManagerService中进程Process和Task的关系</p>
+<p><img src="../images/Task&amp;Process.gif" alt="Task&amp;Process"></p>
+<ol>
+<li><code>ActivityManagerService</code>通过一个列表<code>mHistory</code>来管理所有<code>ActivityRecord</code></li>
+<li>相同<code>TaskRecord</code>中的<code>ActivityRecord</code>在列表中处于连续位置</li>
+<li>同一个<code>TaskRecord</code>中的<code>ActivityRecord</code>可能处于不同的<code>ProcessRecord</code>中</li>
+</ol>
+<p>由于以下两个因素，使得很难找到Task和进程之间关联的清晰线索。</p>
+<ul>
+<li>同一Task中的Activity可能属于不同进程</li>
+<li>进程中不仅有Activity，还有Service和BroadcastReceiver</li>
+</ul>
+<p>先看<strong>Task中Activity销毁</strong></p>
+<ul>
+<li>处理的问题：一个进程内部，前后台Task的资源协调</li>
+<li>触发时机：进程使用的内存接近上限时（根据机型不同，大约在64M～256M之间）</li>
+<li><strong>会调用</strong>Activity#onDestroy，后台Task回到前台时<strong>会触发</strong>Activity#onRestoreInstanceState</li>
+</ul>
+<p>再看<strong>进程被杀</strong></p>
+<ul>
+<li>处理的问题：系统控制中，多进程之间的资源协调</li>
+<li>触发时机：整个系统使用的内存接近机器配置的内存上限时</li>
+<li><strong>不会调用</strong>Activity#onDestroy，后台Task回到前台时<strong>不一定会触发</strong>Activity#onRestoreInstanceState，和Task的启动方式和启动时间有关。</li>
+</ul>
+<p>我们以一个简化的例子讨论两者的关系。假设：</p>
+<ul>
+<li>单进程最大可使用内存为100M，进程使用内存超过90M时会触发后台Task销毁。</li>
+<li>系统总可用内存为200M，系统使用内存超过190M时会触发后台进程被杀。</li>
+<li>系统中运行着3个进程，他们在三个Task中的分布和内存使用如下</li>
+<li>Task1处于前台运行</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Momory Usage</th>
+<th style="text-align:center">Process1</th>
+<th style="text-align:center">Process2</th>
+<th style="text-align:center">Process 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Task1</td>
+<td style="text-align:center">60M</td>
+<td style="text-align:center">20M</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">Task2</td>
+<td style="text-align:center">20M</td>
+<td style="text-align:center">20M</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">Task3</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">40M</td>
+</tr>
+</tbody>
+</table>
+<p>如果T1 P1部分消耗的内存由60M上升到75M，由于P1的总内存消耗达到95M，所以会导致P1 T2中的Activity被销毁。</p>
+<p>如果T1 P2部分消耗的内存由20M上升到50M，会导致系统总内存消耗达到190M。此时三个Process中，P1和P2和前台Task关联，优先级较高，所以系统会杀掉P3。</p>
+<p>这个例子，只是对两者关系的一个简要说明。系统对进程的实际处理方式要复杂得多！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/13/怎么处理SaveState/" itemprop="url">
                   怎么处理SaveState
                 </a>
@@ -669,7 +949,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
