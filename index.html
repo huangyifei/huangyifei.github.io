@@ -417,7 +417,7 @@
 </ol>
 <h2 id="Task和Process的关系"><a href="#Task和Process的关系" class="headerlink" title="Task和Process的关系"></a>Task和Process的关系</h2><p>之前文章的<a href="http://huangyifei.info/2016/10/13/%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86SaveState/" target="_blank" rel="external">《怎么处理SaveState》</a>的末尾也提到的Task和Process的关系。这里重复一遍。</p>
 <p>我们先看下再ActivityManagerService中进程Process和Task的关系</p>
-<p><img src="../images/Task&amp;Process.gif" alt="Task&amp;Process"></p>
+<p><img src="/images/Task&amp;Process.gif" alt="Task&amp;Process"></p>
 <ol>
 <li><code>ActivityManagerService</code>通过一个列表<code>mHistory</code>来管理所有<code>ActivityRecord</code></li>
 <li>相同<code>TaskRecord</code>中的<code>ActivityRecord</code>在列表中处于连续位置</li>
