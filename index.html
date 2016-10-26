@@ -249,6 +249,185 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/26/使用Mobsy进行MVP实战/" itemprop="url">
+                  使用Mobsy进行MVP实战
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-26T10:22:31+08:00" content="2016-10-26">
+              2016-10-26
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用Mobsy进行MVP实战"><a href="#使用Mobsy进行MVP实战" class="headerlink" title="使用Mobsy进行MVP实战"></a>使用Mobsy进行MVP实战</h1><h2 id="MVP介绍"><a href="#MVP介绍" class="headerlink" title="MVP介绍"></a>MVP介绍</h2><ul>
+<li>M：Model，需要显示的数据，以及获取和保存数据的相关逻辑</li>
+<li>V：View，显示数据的页面或空间，并接受用户的交互</li>
+<li>P：Presenter，处于M和V中间，是对产品交互的抽象。决定M由哪个V显示，V的动作会引起哪些数据的变化。</li>
+</ul>
+<p>如下为典型的MVP工作流程</p>
+<p><img src="/images/mvp-workflow.png" alt="mvp workflow"></p>
+<p>需要注意的点：</p>
+<ol>
+<li>Presenter不应该直接处理View的事件</li>
+<li>View只应向Presenter传递消息，并接受Presenter的命令</li>
+<li>Activity和Fragment是View的一部分，一般可用于处理用户事件</li>
+<li>Presenter和Model应该是纯Java代码，而且可以独立的运行单元测试</li>
+</ol>
+<h2 id="Mosby介绍"><a href="#Mosby介绍" class="headerlink" title="Mosby介绍"></a>Mosby介绍</h2><h3 id="gradle依赖"><a href="#gradle依赖" class="headerlink" title="gradle依赖"></a>gradle依赖</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">    </div><div class="line">    <span class="keyword">compile</span> <span class="string">'com.hannesdorfmann.mosby:mvp:2.0.1'</span></div><div class="line">    <span class="keyword">compile</span> <span class="string">'com.hannesdorfmann.mosby:viewstate:2.0.1'</span></div><div class="line">    </div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="MvpView和MvpPresenter"><a href="#MvpView和MvpPresenter" class="headerlink" title="MvpView和MvpPresenter"></a>MvpView和MvpPresenter</h3><ul>
+<li>MvpView是个空接口。在实际使用时，会扩展这个接口来定义一系列的View的方法</li>
+<li>MvpView会依附或脱离于MvpPresenter。库中定义好的一些MvpView使用代理模式实现了依附和脱离的逻辑。</li>
+<li>MvpPresenter通过软引用访问View，从而避免内存泄漏</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MvpView</span> </span>&#123; &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MvpPresenter</span>&lt;<span class="title">V</span> <span class="keyword">extends</span> <span class="title">MvpView</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attachView</span><span class="params">(V view)</span></span>;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">detachView</span><span class="params">(<span class="keyword">boolean</span> retainInstance)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="通过MvpLceFragment学习使用MVP"><a href="#通过MvpLceFragment学习使用MVP" class="headerlink" title="通过MvpLceFragment学习使用MVP"></a>通过MvpLceFragment学习使用MVP</h3><p>LCE就是Loading-Content-Error，代表了一个典型的移动互联网应用的页面。</p>
+<ol>
+<li>显示LoadingView，并在后台获取数据</li>
+<li>如果获取成功，显示获取的到数据</li>
+<li>如果失败，显示一个错误的提示View</li>
+</ol>
+<p>先看看MvpLceView</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@param</span> &lt;M&gt; The type of the data displayed in this view</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MvpLceView</span>&lt;<span class="title">M</span>&gt; <span class="keyword">extends</span> <span class="title">MvpView</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * Display a loading view while loading data in background.</div><div class="line">   * &lt;b&gt;The loading view must have the id = R.id.loadingView&lt;/b&gt;</div><div class="line">   *</div><div class="line">   * <span class="doctag">@param</span> pullToRefresh true, if pull-to-refresh has been invoked loading.</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showLoading</span><span class="params">(<span class="keyword">boolean</span> pullToRefresh)</span></span>;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * Show the content view.</div><div class="line">   *</div><div class="line">   * &lt;b&gt;The content view must have the id = R.id.contentView&lt;/b&gt;</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showContent</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * Show the error view.</div><div class="line">   * &lt;b&gt;The error view must be a TextView with the id = R.id.errorView&lt;/b&gt;</div><div class="line">   *</div><div class="line">   * <span class="doctag">@param</span> e The Throwable that has caused this error</div><div class="line">   * <span class="doctag">@param</span> pullToRefresh true, if the exception was thrown during pull-to-refresh, otherwise</div><div class="line">   * false.</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showError</span><span class="params">(Throwable e, <span class="keyword">boolean</span> pullToRefresh)</span></span>;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * The data that should be displayed with &#123;<span class="doctag">@link</span> #showContent()&#125;</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(M data)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实现MvpLceView的控件或页面一定要包含至少3个View，他们的id分别为<code>R.id.loadingView</code>,<code>R.id.contentView</code> 和 <code>R.id.errorView</code>，因此我们使用如下的xml为Fragment布局。</p>
+<p>库工程中的<code>MvpLceFragment</code>和<code>MvpLceActivity</code>已经实现了<code>MvpLceView</code>的三个方法<br><code>showLoading</code>，<code>showContent</code>和<code>showError</code>，</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    &gt;</div><div class="line"></div><div class="line">  <span class="comment">&lt;!-- Loading View --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">ProgressBar</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/loadingView"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></div><div class="line">    <span class="attr">android:indeterminate</span>=<span class="string">"true"</span></div><div class="line">    /&gt;</div><div class="line"></div><div class="line">  <span class="comment">&lt;!-- Content View --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">android.support.v4.widget.SwipeRefreshLayout</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/contentView"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    &gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/recyclerView"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">android.support.v4.widget.SwipeRefreshLayout</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Error view --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/errorView"</span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">      /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这个页面中将显示一个从网络获取的国家列表，先看看Presenter的代码。这里通过CountriesAsyncLoader获取国家列表，并通过setData和showContent让View显示这些国家信息。当然还获取前显示Loading，获取失败后显示Error。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountriesPresenter</span> <span class="keyword">extends</span> <span class="title">MvpBasePresenter</span>&lt;<span class="title">CountriesView</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadCountries</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> pullToRefresh)</span> </span>&#123;</div><div class="line"></div><div class="line">    getView().showLoading(pullToRefresh);</div><div class="line"></div><div class="line"></div><div class="line">    CountriesAsyncLoader countriesLoader = <span class="keyword">new</span> CountriesAsyncLoader(</div><div class="line">        <span class="keyword">new</span> CountriesAsyncLoader.CountriesLoaderListener() &#123;</div><div class="line"></div><div class="line">          <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(List&lt;Country&gt; countries)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (isViewAttached()) &#123;</div><div class="line">              getView().setData(countries);</div><div class="line">              getView().showContent();</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line"></div><div class="line">          <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Exception e)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (isViewAttached()) &#123;</div><div class="line">              getView().showError(e, pullToRefresh);</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">    countriesLoader.execute();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后是MvpLceFragment，注意其中的<code>createPresenter</code>是所有的MvpView都需要实现的方法，用于创建和MvpView关联的Presenter，另一个<code>setData</code>两个方法是MvpLceFragment中没有实现的方法，因为只有实现的时候才知道最终的Model，已经如何显示这个Model。</p>
+<p>另一个要注意的是MvpLceFragment的四个范型，依次是：显示内容的AndroidView，需要显示的内容Model，MvpView，MvpPresenter。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountriesFragment</span></span></div><div class="line">    <span class="keyword">extends</span> <span class="title">MvpLceFragment</span>&lt;<span class="title">SwipeRefreshLayout</span>, <span class="title">List</span>&lt;<span class="title">Country</span>&gt;, <span class="title">CountriesView</span>, <span class="title">CountriesPresenter</span>&gt;</div><div class="line">    <span class="keyword">implements</span> <span class="title">CountriesView</span>, <span class="title">SwipeRefreshLayout</span>.<span class="title">OnRefreshListener</span> &#123;</div><div class="line"></div><div class="line">  <span class="meta">@Bind</span>(R.id.recyclerView) RecyclerView recyclerView;</div><div class="line">  CountriesAdapter adapter;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> inflater.inflate(R.layout.countries_list, container, <span class="keyword">false</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewCreated</span><span class="params">(View view, @Nullable Bundle savedInstance)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onViewCreated(view, savedInstance);</div><div class="line"></div><div class="line">    <span class="comment">// Setup contentView == SwipeRefreshView</span></div><div class="line">    contentView.setOnRefreshListener(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Setup recycler view</span></div><div class="line">    adapter = <span class="keyword">new</span> CountriesAdapter(getActivity());</div><div class="line">    recyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getActivity()));</div><div class="line">    recyclerView.setAdapter(adapter);</div><div class="line">    loadData(<span class="keyword">false</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadData</span><span class="params">(<span class="keyword">boolean</span> pullToRefresh)</span> </span>&#123;</div><div class="line">    presenter.loadCountries(pullToRefresh);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> CountriesPresenter <span class="title">createPresenter</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> SimpleCountriesPresenter();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(List&lt;Country&gt; data)</span> </span>&#123;</div><div class="line">    adapter.setCountries(data);</div><div class="line">    adapter.notifyDataSetChanged();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">    loadData(<span class="keyword">true</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="实战——封装一个LceListView"><a href="#实战——封装一个LceListView" class="headerlink" title="实战——封装一个LceListView"></a>实战——封装一个LceListView</h2><p>这部分代码可<a href="https://github.com/huangyifei/AndroidExample/tree/MosbyMvp" target="_blank" rel="external">参考代码</a>，只用关注mvplist包下的相关代码即可。</p>
+<p>这个页面的View结构和之前的MvpLceFrgment类似，并通过修改Adapter给RecycleView的末尾增加了一个LoadMoreView。将这类业务的下拉刷新，上拉加载更多，以及错误处理都抽象出来。实现列表时，剩下的逻辑主要包括</p>
+<ol>
+<li>Model：获取的数据，以及从数据中获取每个列表项展示需要的数据列表</li>
+<li>Presenter：刷新和加载更多时，分别调用Model的获取数据方法</li>
+<li>View：根据数据决定ViewHolder的类型，以及ViewHolder的实现</li>
+</ol>
+<p>如何使用，可以参考mvplist.sample包的内容</p>
+<h3 id="基类LecListView的方案"><a href="#基类LecListView的方案" class="headerlink" title="基类LecListView的方案"></a>基类LecListView的方案</h3><p>LecListView包含了一个LoadMoreView，LoadMoreView也符合Mvp架构。</p>
+<p>我们先看看LoadMoreView的实现。</p>
+<h4 id="LoadMoreView"><a href="#LoadMoreView" class="headerlink" title="LoadMoreView"></a>LoadMoreView</h4><ul>
+<li>没有Model：这里的数据只包括一个状态，因此没有对应的Model类</li>
+<li>LoadMoreView<ul>
+<li>提供一个<code>setState(int state)</code>方法，供Presenter更新状态</li>
+<li>加载更多失败的情况下，点击View会请求Presenter更改状态到Loading</li>
+</ul>
+</li>
+<li>LoadMorePresenter<ul>
+<li>通过<code>setLoadMoreState(int state)</code>改变View的状况</li>
+<li>通过接口<code>LoadMoreListener#onLoadMore</code>通知LceListViewPresenter加载更多数据</li>
+</ul>
+</li>
+</ul>
+<h4 id="LecListView"><a href="#LecListView" class="headerlink" title="LecListView"></a>LecListView</h4><ul>
+<li>IListModel：在<code>LceListView</code>中，Model应实现IListModel，从而提供一个在RecycleView中显示的数据列表。</li>
+</ul>
+<pre><code>```Java
+public interface IListModel&lt;M&gt; {
+    List&lt;M&gt; getData();
+}
+```    
+</code></pre><ul>
+<li>LceListView<ul>
+<li>实现了<code>MvpLceView</code>的五个方法，和在列表底部添加数据的<code>addData</code>方法</li>
+<li>监听RecyclerView的滚动，通知Presenter改变加载更多的状态</li>
+<li>使用LceListAdapter为RecyclerView底部增加了LoadMoreView</li>
+</ul>
+</li>
+<li>LceListPresenter实现ILceListPresenter<ul>
+<li>在refreshData时，通知LceListView显示Loading</li>
+<li>包含一个LoadMorePresenter来实现ILoadMorePresenter的接口</li>
+<li>在LoadMoreView附着在窗口时，调用<code>LceListPresenter#setLoadMorePresenter</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://hannesdorfmann.com/mosby/mvp/" target="_blank" rel="external">Mosby MVP</a></li>
+<li><a href="http://blog.csdn.net/copy_yuan/article/details/51524667" target="_blank" rel="external">Android—-MVC、MVP、MVVM、区别介绍</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/18/一次搞定Process和Task/" itemprop="url">
                   一次搞定Process和Task
                 </a>
@@ -949,7 +1128,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
