@@ -249,6 +249,175 @@
             
               
                 
+                <a class="post-title-link" href="/2016/11/11/搭建Open-VPN服务端和编译Android客户端/" itemprop="url">
+                  搭建Open VPN服务端和编译Android客户端
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-11T17:56:38+08:00" content="2016-11-11">
+              2016-11-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="搭建Open-VPN服务端和编译Android客户端"><a href="#搭建Open-VPN服务端和编译Android客户端" class="headerlink" title="搭建Open VPN服务端和编译Android客户端"></a>搭建Open VPN服务端和编译Android客户端</h1><h2 id="服务端安装和配置"><a href="#服务端安装和配置" class="headerlink" title="服务端安装和配置"></a>服务端安装和配置</h2><blockquote>
+<p>首先你需要一台服务器，笔者是在阿里云主机上进行的安装，主机系统为centos 6.5。</p>
+<p>如果你只关注客户端，就直接看第二部分吧。</p>
+</blockquote>
+<p>这部分主要参考<a href="https://www.unixmen.com/setup-openvpn-server-client-centos-6-5/" target="_blank" rel="external">Open VPN的安装和配置</a>，其中客户端的部分我们会使用Open VPN的Android客户端，所以不用关注原文的客户端部分。</p>
+<h3 id="安装openvpn和easy-rsa"><a href="#安装openvpn和easy-rsa" class="headerlink" title="安装openvpn和easy-rsa"></a>安装openvpn和easy-rsa</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install openvpn easy-rsa</div></pre></td></tr></table></figure>
+<p>直接使用<strong>yum</strong>命令安装。<strong>easy-rsa</strong>会被放在<strong>/usr/share/easy-rsa/</strong>，在<strong>/etc/openvpn</strong>中创建目录<strong>/easy-rsa/keys</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -p /etc/openvpn/easy-rsa/keys</div><div class="line">cp -rf /usr/share/easy-rsa/2.0/* /etc/openvpn/easy-rsa/</div></pre></td></tr></table></figure>
+<h3 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h3><p>编辑<strong>/etc/openvpn/easy-rsa/2.0/vars</strong>，这里主要是填写个人信息，以下几项不要空白。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[...]</div><div class="line"># Don&apos;t leave any of these fields blank.</div><div class="line">export KEY_COUNTRY=&quot;IN&quot;</div><div class="line">export KEY_PROVINCE=&quot;TN&quot;</div><div class="line">export KEY_CITY=&quot;Erode&quot;</div><div class="line">export KEY_ORG=&quot;Unixmen&quot;</div><div class="line">export KEY_EMAIL=&quot;sk@unixmen.com&quot;</div><div class="line">export KEY_OU=&quot;server&quot;</div><div class="line">[...]</div></pre></td></tr></table></figure>
+<p>然后运行以下脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd /etc/openvpn/easy-rsa/</div><div class="line">cp openssl-1.0.0.cnf openssl.cnf</div><div class="line">source ./vars</div><div class="line">./clean-all</div><div class="line">./build-ca</div></pre></td></tr></table></figure>
+<p>由于前面已经配置好了个人信息，这里一路回车就可以了。</p>
+<p>然后再分别生成服务端、客户端证书和<strong>Diffie Hellman Parameter</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">./build-key-server server</div><div class="line">./build-key client</div><div class="line">./build-dh</div></pre></td></tr></table></figure>
+<p>运行之后证书文件就会保存在<strong>/etc/openvpn/easy-rsa/keys/</strong>中，将以下四个服务端相关文件保存在<strong>/ect/openvpn/</strong>中</p>
+<ul>
+<li>ca.crt</li>
+<li>dh2048.pem</li>
+<li>server.crt</li>
+<li>server.key</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /etc/openvpn/easy-rsa/keys/</div><div class="line">cp dh2048.pem ca.crt server.crt server.key /etc/openvpn/</div></pre></td></tr></table></figure>
+<p>还有三个客户端会使用的文件也在<strong>/etc/openvpn/easy-rsa/keys/</strong>中</p>
+<ul>
+<li>ca.crt</li>
+<li>client.crt</li>
+<li>client.key</li>
+</ul>
+<p>如果想要删除这个客户端的权限，可通过以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/openvpn/easy-rsa/2.0/vars</div><div class="line">/etc/openvpn/easy-rsa/2.0/revoke-full client</div></pre></td></tr></table></figure>
+<h3 id="修改Open-VPN配置"><a href="#修改Open-VPN配置" class="headerlink" title="修改Open VPN配置"></a>修改Open VPN配置</h3><p>拷贝和编辑server.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp /usr/share/doc/openvpn-2.3.2/sample/sample-config-files/server.conf /etc/openvpn/</div><div class="line">vi /etc/openvpn/server.conf</div></pre></td></tr></table></figure>
+<p>将以下部分的注释去掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[...]</div><div class="line"></div><div class="line"># Substitute 2048 for 1024 if you are using</div><div class="line"># 2048 bit keys.</div><div class="line">dh dh2048.pem</div><div class="line"></div><div class="line">[...]</div><div class="line"></div><div class="line">push &quot;redirect-gateway def1 bypass-dhcp&quot;</div><div class="line"></div><div class="line">[...]</div><div class="line"></div><div class="line">push &quot;dhcp-option DNS 8.8.8.8&quot;</div><div class="line">push &quot;dhcp-option DNS 8.8.4.4&quot;</div><div class="line"></div><div class="line">[...]</div><div class="line"></div><div class="line">user nobody</div><div class="line">group nobody</div><div class="line"></div><div class="line">[...]</div></pre></td></tr></table></figure>
+<h3 id="配置ip转发和路由"><a href="#配置ip转发和路由" class="headerlink" title="配置ip转发和路由"></a>配置ip转发和路由</h3><p>编辑<strong>sysctl.conf</strong>，将<strong>net.ipv4.ip_forward</strong>改为1，保存并应用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysctl.conf</div><div class="line"></div><div class="line"># Controls IP packet forwarding</div><div class="line">net.ipv4.ip_forward = 1</div><div class="line"></div><div class="line">sysctl -p</div></pre></td></tr></table></figure>
+<p>修改iptables并应用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE</div><div class="line">service iptables save</div><div class="line">service iptables restart</div></pre></td></tr></table></figure>
+<p>如果iptable设置遇到问题，需要修改，可以参考<a href="http://blog.51yip.com/linux/1404.html" target="_blank" rel="external">iptables 添加，删除，查看，修改</a></p>
+<h3 id="启动Open-VPN服务"><a href="#启动Open-VPN服务" class="headerlink" title="启动Open VPN服务"></a>启动Open VPN服务</h3><p>启动服务只需要两行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">service openvpn start</div><div class="line">chkconfig openvpn on</div></pre></td></tr></table></figure>
+<p>可以通过<strong>ifconfig</strong>命令检查tun接口是否创建成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  </div><div class="line">          inet addr:10.8.0.1  P-t-P:10.8.0.2  Mask:255.255.255.255</div><div class="line">          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1500  Metric:1</div><div class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</div><div class="line">          collisions:0 txqueuelen:100 </div><div class="line">          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)</div></pre></td></tr></table></figure>
+<h2 id="Android客户端编译和运行"><a href="#Android客户端编译和运行" class="headerlink" title="Android客户端编译和运行"></a>Android客户端编译和运行</h2><p>首先是<a href="https://github.com/schwabe/ics-openvpn" target="_blank" rel="external">ics-openvpn</a>@Github。</p>
+<h3 id="让Android代码运行起来"><a href="#让Android代码运行起来" class="headerlink" title="让Android代码运行起来"></a>让Android代码运行起来</h3><p>github的源码需要经过ndk-build才能生成so库，但是笔者在这一步遇到了一些问题还未解决，索性绕道走了。最后会再提到这个坑，以后再去填。这里先介绍这个捷径，对于只想自己编译应用层代码的人是一个不错的选择。</p>
+<p>因为ndk-build的最终目的就是生成一堆so文件，所以我直接从官方apk中找到了这些so，并放到了我自己的工程中。</p>
+<p><strong><em>我不生产so，我只是so的<a href="/images/openvpn_so.zip">搬运工</a></em></strong></p>
+<p>下载完成后，将这些so文件夹放到工程目录的<strong>main/ovpnlibs/jniLibs</strong>下，因为在<strong>main</strong>的<strong>build.gradle</strong>中指定了</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jniLibs.srcDirs = [<span class="string">'ovpnlibs/jniLibs'</span>]</div></pre></td></tr></table></figure>
+<p>如果顺利的话，接下来就可以在Android Studio中编译运行了。</p>
+<h3 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h3><p>运行的结果如下图</p>
+<p><img src="/images/openvpn_blank.png" alt=""></p>
+<p>下面需要准备客户端的证书文件了，如下是我的ovpn文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">setenv CLIENT_CERT 0</div><div class="line">client</div><div class="line">dev tun</div><div class="line">proto udp</div><div class="line">remote 1.1.1.1 1194</div><div class="line">resolv-retry infinite</div><div class="line">nobind</div><div class="line">persist-key</div><div class="line">persist-tun</div><div class="line"></div><div class="line"></div><div class="line">&lt;ca&gt;</div><div class="line">-----BEGIN CERTIFICATE-----</div><div class="line">MIIE0zCCA7ugAwIB</div><div class="line">-----END CERTIFICATE-----</div><div class="line">&lt;/ca&gt;</div><div class="line"></div><div class="line">&lt;cert&gt;</div><div class="line">-----BEGIN CERTIFICATE-----</div><div class="line">MIIFETCCA/mgAwI</div><div class="line">-----END CERTIFICATE-----</div><div class="line">&lt;/cert&gt;</div><div class="line"></div><div class="line">&lt;key&gt;</div><div class="line">-----BEGIN PRIVATE KEY-----</div><div class="line">MIIEvgIBADANBgkq</div><div class="line">-----END PRIVATE KEY-----</div><div class="line">&lt;/key&gt;</div><div class="line"></div><div class="line">ns-cert-type server</div><div class="line">comp-lzo</div><div class="line">verb 3</div></pre></td></tr></table></figure>
+<ul>
+<li>remote要改为自己服务器的地址，1194是VPN服务默认使用的端口</li>
+<li><ca></ca>中的内容对应之前生成的ca.crt</li>
+<li><cert></cert>对应client.crt</li>
+<li><key></key>对应client.key</li>
+</ul>
+<p>将准备好的ovpn文件拷贝到手机上，通过客户端右上角的按钮添加</p>
+<p><img src="/images/openvpn_ovpn.png" alt=""></p>
+<p>回到主页会生成一个连接，点击后会弹出系统的授权窗口，确认后即可连接到Open VPN服务器。以下是一个成功连接的日志</p>
+<p><img src="/images/openvpn_log.png" alt=""></p>
+<p><strong><em>大功告成！！！</em></strong></p>
+<p>到目前为止，我们已经<strong>知其然</strong>了，下面再慢慢花时间来<strong>知其所以然</strong>吧。</p>
+<h3 id="自己生产so库"><a href="#自己生产so库" class="headerlink" title="自己生产so库"></a>自己生产so库</h3><p>如果你希望修改Open VPN的底层代码，并自己编译so库，首先你要有NDK环境。</p>
+<p>由于一个已知的<a href="https://www.bountysource.com/issues/38560293-all-cipher-types-are-either-not-supported-or-not-found" target="_blank" rel="external">兼容性的问题</a>，Open VPN的作者建议使用ndk 12去编译Open VPN，目前Android Studio默认提供的是r13版本。</p>
+<p>这个问题本人在HTC One上遇到了，但是在一个魅族手机上就没有这个问题。</p>
+<p>另外<a href="https://github.com/schwabe/ics-openvpn" target="_blank" rel="external">ics-openvpn</a>中native代码依赖两个子仓库，如果自己编译，请注意不要漏掉这部分。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://www.unixmen.com/setup-openvpn-server-client-centos-6-5/" target="_blank" rel="external">Open VPN的安装和配置</a></li>
+<li><a href="http://blog.51yip.com/linux/1404.html" target="_blank" rel="external">iptables 添加，删除，查看，修改</a></li>
+<li><a href="https://github.com/schwabe/ics-openvpn" target="_blank" rel="external">ics-openvpn</a>@Github</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/31/Android图片加载问题分析/" itemprop="url">
                   Android图片加载问题分析
                 </a>
@@ -1300,7 +1469,7 @@ public interface IListModel&lt;M&gt; {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
