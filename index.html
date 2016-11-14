@@ -340,7 +340,7 @@
 <h2 id="Android客户端编译和运行"><a href="#Android客户端编译和运行" class="headerlink" title="Android客户端编译和运行"></a>Android客户端编译和运行</h2><p>首先是<a href="https://github.com/schwabe/ics-openvpn" target="_blank" rel="external">ics-openvpn</a>@Github。</p>
 <h3 id="让Android代码运行起来"><a href="#让Android代码运行起来" class="headerlink" title="让Android代码运行起来"></a>让Android代码运行起来</h3><p>github的源码需要经过ndk-build才能生成so库，但是笔者在这一步遇到了一些问题还未解决，索性绕道走了。最后会再提到这个坑，以后再去填。这里先介绍这个捷径，对于只想自己编译应用层代码的人是一个不错的选择。</p>
 <p>因为ndk-build的最终目的就是生成一堆so文件，所以我直接从官方apk中找到了这些so，并放到了我自己的工程中。</p>
-<p><strong><em>我不生产so，我只是so的<a href="/images/搬运工.zip">搬运工</a></em></strong></p>
+<p><strong><em>我不生产so，我只是so的搬运工</em></strong></p>
 <p>下载完成后，将这些so文件夹放到工程目录的<strong>main/ovpnlibs/jniLibs</strong>下，因为在<strong>main</strong>的<strong>build.gradle</strong>中指定了</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jniLibs.srcDirs = [<span class="string">'ovpnlibs/jniLibs'</span>]</div></pre></td></tr></table></figure>
 <p>如果顺利的话，接下来就可以在Android Studio中编译运行了。</p>
