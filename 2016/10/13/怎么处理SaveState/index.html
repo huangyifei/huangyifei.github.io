@@ -1,0 +1,704 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="怎么处理SaveState前文链接：是时候使用SaveState了
+要使前文介绍的5.0新机制生效，应用需要设计为多Task结构，而且要处理好页面的SaveState相关逻辑。
+这里先讨论SaveState的相关逻辑，再介绍怎么设计应用的Task结构。
+处理SaveState的四个方面在之前演示代码的基础上，我们稍做改动：代码链接
+
+ActivityTwo包含一个文字列表
+文字列表中每一项的前缀是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么处理SaveState">
+<meta property="og:url" content="http://www.huangyifei.info/2016/10/13/怎么处理SaveState/index.html">
+<meta property="og:site_name" content="黄怡菲的博客">
+<meta property="og:description" content="怎么处理SaveState前文链接：是时候使用SaveState了
+要使前文介绍的5.0新机制生效，应用需要设计为多Task结构，而且要处理好页面的SaveState相关逻辑。
+这里先讨论SaveState的相关逻辑，再介绍怎么设计应用的Task结构。
+处理SaveState的四个方面在之前演示代码的基础上，我们稍做改动：代码链接
+
+ActivityTwo包含一个文字列表
+文字列表中每一项的前缀是">
+<meta property="og:image" content="http://www.huangyifei.info/images/create.png">
+<meta property="og:image" content="http://www.huangyifei.info/images/restore.png">
+<meta property="og:image" content="http://www.huangyifei.info/images/create.png">
+<meta property="og:image" content="http://www.huangyifei.info/images/Task&Process.gif">
+<meta property="og:updated_time" content="2016-10-13T10:07:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="怎么处理SaveState">
+<meta name="twitter:description" content="怎么处理SaveState前文链接：是时候使用SaveState了
+要使前文介绍的5.0新机制生效，应用需要设计为多Task结构，而且要处理好页面的SaveState相关逻辑。
+这里先讨论SaveState的相关逻辑，再介绍怎么设计应用的Task结构。
+处理SaveState的四个方面在之前演示代码的基础上，我们稍做改动：代码链接
+
+ActivityTwo包含一个文字列表
+文字列表中每一项的前缀是">
+<meta name="twitter:image" content="http://www.huangyifei.info/images/create.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.huangyifei.info/2016/10/13/怎么处理SaveState/"/>
+
+
+  <title> 怎么处理SaveState | 黄怡菲的博客 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">黄怡菲的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">技术大杂烩</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                怎么处理SaveState
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-13T17:56:25+08:00" content="2016-10-13">
+              2016-10-13
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="怎么处理SaveState"><a href="#怎么处理SaveState" class="headerlink" title="怎么处理SaveState"></a>怎么处理SaveState</h1><p>前文链接：<a href="http://huangyifei.info/2016/10/12/%E6%98%AF%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8SaveState%E4%BA%86/" target="_blank" rel="external">是时候使用SaveState了</a></p>
+<p>要使前文介绍的5.0新机制生效，应用需要设计为多Task结构，而且要处理好页面的SaveState相关逻辑。</p>
+<p>这里先讨论SaveState的相关逻辑，再介绍怎么设计应用的Task结构。</p>
+<h2 id="处理SaveState的四个方面"><a href="#处理SaveState的四个方面" class="headerlink" title="处理SaveState的四个方面"></a>处理SaveState的四个方面</h2><p>在之前演示代码的基础上，我们稍做改动：<a href="https://github.com/huangyifei/AndroidExample/tree/SaveStateC" target="_blank" rel="external">代码链接</a></p>
+<ol>
+<li>ActivityTwo包含一个文字列表</li>
+<li>文字列表中每一项的前缀是由启动的Intent的Extra决定</li>
+<li>文字列表中每一项的后缀是由创建页面的时间戳决定</li>
+</ol>
+<p>如果我们不处理SaveState，则在恢复ActivityTwo时，列表中每一项的后缀会发生变化，如果处理SaveState，则能保证返回时页面和创建时一样。在代码中通过修改<code>ActivityTwo#ENABLE_SAVE_STATE</code>可以切换两种状态。</p>
+<p>创建时的页面：</p>
+<p><img src="/images/create.png" alt="创建时的页面"></p>
+<p>不处理SaveState恢复后的页面</p>
+<p><img src="/images/restore.png" alt="不处理SaveState恢复后的页面"></p>
+<p>处理SaveState恢复后的页面</p>
+<p><img src="/images/create.png" alt="处理SaveState恢复后的页面"></p>
+<p>SaveState的处理应该包括4个部分</p>
+<ol>
+<li>保存数据</li>
+<li>恢复数据</li>
+<li>处理View</li>
+<li>处理Fragment</li>
+</ol>
+<h3 id="第一：保存数据"><a href="#第一：保存数据" class="headerlink" title="第一：保存数据"></a>第一：保存数据</h3><p>这一步相对简单，只要把页面中的数据变量保存到outState中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line">    <span class="keyword">if</span> (ENABLE_SAVE_STATE) &#123;</div><div class="line">        outState.putString(KEY_PREFIX, mPrefix);</div><div class="line">        outState.putString(KEY_SUFFIX, mSuffix);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实际项目中，可能由Intent中传入页面id，再通过网络接口获取页面详情。这时，也需要将网络返回的数据也保存在outState中。</p>
+<h3 id="第二：恢复数据"><a href="#第二：恢复数据" class="headerlink" title="第二：恢复数据"></a>第二：恢复数据</h3><p>恢复数据时，需要考虑onCreate的正常处理逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.activity_two);</div><div class="line">    mListView = (ListView) findViewById(R.id.lv);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (ENABLE_SAVE_STATE &amp;&amp; savedInstanceState != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">// 恢复流程</span></div><div class="line">        mPrefix = savedInstanceState.getString(KEY_PREFIX);</div><div class="line">        mSuffix = savedInstanceState.getString(KEY_SUFFIX);</div><div class="line">        mListView.setAdapter(<span class="keyword">new</span> TwoAdapter(mPrefix, mSuffix));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// 初始化流程</span></div><div class="line">        mPrefix = getIntent().getStringExtra(KEY_PREFIX);</div><div class="line">        mSuffix = String.valueOf(SystemClock.uptimeMillis());</div><div class="line">        mListView.setAdapter(<span class="keyword">new</span> TwoAdapter(mPrefix, mSuffix));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实际项目中，初始化网络请求应放初始化流程中，而类似<code>mListView.setAdapter</code>的View更新逻辑应该在网络请求的回调中处理。</p>
+<h3 id="第三：处理View"><a href="#第三：处理View" class="headerlink" title="第三：处理View"></a>第三：处理View</h3><p>上面的例子中，除了ListView的内容，我们还应注意到ListView的位置。不管我们是否处理SaveState，ListView都会恢复到离开时的位置。这是因为ListView的基类AbsListView实现了Save和Restore，下面是节选的一小段源码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AbsListView</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Parcelable <span class="title">onSaveInstanceState</span><span class="params">()</span> </span>&#123;</div><div class="line">        ......</div><div class="line"></div><div class="line">        Parcelable superState = <span class="keyword">super</span>.onSaveInstanceState();</div><div class="line"></div><div class="line">        SavedState ss = <span class="keyword">new</span> SavedState(superState);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mPendingSync != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// Just keep what we last restored.</span></div><div class="line">            ss.selectedId = mPendingSync.selectedId;</div><div class="line">            ss.firstId = mPendingSync.firstId;</div><div class="line">            ss.viewTop = mPendingSync.viewTop;</div><div class="line">            ss.position = mPendingSync.position;</div><div class="line">            ss.height = mPendingSync.height;</div><div class="line">            ss.filter = mPendingSync.filter;</div><div class="line">            ss.inActionMode = mPendingSync.inActionMode;</div><div class="line">            ss.checkedItemCount = mPendingSync.checkedItemCount;</div><div class="line">            ss.checkState = mPendingSync.checkState;</div><div class="line">            ss.checkIdState = mPendingSync.checkIdState;</div><div class="line">            <span class="keyword">return</span> ss;</div><div class="line">        &#125;</div><div class="line">        .......</div><div class="line">     &#125;</div></pre></td></tr></table></figure>
+<p>除了AbsListView，还有很多View实现了Save和Restore的机制，包括ViewPager当前的位置，EditText和TextView中的文本等。</p>
+<p>关于View的处理主要注意以下几点：</p>
+<ul>
+<li>系统以一个Map来保存View的状态，以id为key</li>
+<li>没有id的View是不会被保存状态的</li>
+<li>如果id重复，则View的状态会被覆盖</li>
+<li>自定义的View，要注意处理View的Save和Restore</li>
+<li>如果View的恢复有特殊处理逻辑，需要充分考虑View更新的时机，注意onCreate、onRestoreInstanceState和网络请求回调的时序问题。</li>
+</ul>
+<h3 id="第三：处理Fragment"><a href="#第三：处理Fragment" class="headerlink" title="第三：处理Fragment"></a>第三：处理Fragment</h3><p>关于Fragment的处理，和Activity的处理基本一致。只需要注意一个特殊的地方</p>
+<p>很多项目都会只在Manifest中声明一个FragmentContainerActivity的模式，各个页面通过Fragment实现。然后启动FragmentContainerActivity，通过Extra传递要展现的Fragment类名和Argument。<code>FragmentContainerActivity#onCreate</code>中创建并添加Fragment。</p>
+<p>由于Activity的恢复机制会自动重建Fragment，所以在恢复时不要再重复创建添加Fragment。当然也不要新创建，并通过replace替换老的，这样会使Fragment的恢复机制失效。</p>
+<p>这部的例子演示，可使用如下步骤复现：</p>
+<ol>
+<li>修改<code>ActivityThree#ENABLE_SAVE_STATE</code>进行切换</li>
+<li>启动Three</li>
+<li>点击Three的文字可返回到One</li>
+<li>在One中消耗内存，直到logcat中出现<code>ActivityThree#onDestroy</code></li>
+<li>再次启动Three</li>
+</ol>
+<h2 id="合理区分Task"><a href="#合理区分Task" class="headerlink" title="合理区分Task"></a>合理区分Task</h2><p>Android关于Task的定义十分复杂，而且很多特性在普通应用开发中根本用不到。而且在5.0之后，又引入了android:documentLaunchMode让它变得更加复杂了。</p>
+<p>关于Task，还需要另一篇专题来讨论。这里只举两类多Task的例子。</p>
+<h3 id="使用singleInstance"><a href="#使用singleInstance" class="headerlink" title="使用singleInstance"></a>使用singleInstance</h3><p>给一些特定的页面设置singleInstance，可使他们处于单独的Task中。这类页面一般和其他页面没有很强的逻辑关系，同时又是消耗资源的大户。</p>
+<p>适用场景：</p>
+<ul>
+<li>视频播放或录制页（视频的编码解码，视频上的绚丽弹幕和礼物等）</li>
+<li>应用介绍页（包含很多大图和动画）</li>
+<li>应用内用于现实外部网页的单WebView页</li>
+<li>ViewPager实现的大图图集页</li>
+</ul>
+<h3 id="使用taskAffinity"><a href="#使用taskAffinity" class="headerlink" title="使用taskAffinity"></a>使用taskAffinity</h3><p>给一组完成某一功能的Activity设置相同的taskAffinity，就可使用<code>FLAG_ACTIVITY_NEW_TASK</code>启动新Task。使用taskAffinity启动的新Task一般都包括多个Activity，而且和别的参数相互影响，请谨慎使用。</p>
+<p>适用场景：</p>
+<ul>
+<li>注册、登陆、找回密码等页面（这类页面一般占用的资源并不多，不一定要设计在独立的Task中）</li>
+<li>自定义的选择相册，照相机，图片预览，图片裁剪等页面</li>
+</ul>
+<h3 id="关于多Task的补充"><a href="#关于多Task的补充" class="headerlink" title="关于多Task的补充"></a>关于多Task的补充</h3><p>由于不同的Task之间不能通过StartActivityForResult传递结果，可能需要EventBus或其他机制在Task之间传递信息。</p>
+<p>默认的每个Task都会出现在最近应用中。上述的这些情况中，都可使用<code>android:excludeFromRecents</code>避免这些Task在最近应用中出现</p>
+<p>后面单独补充了一节<strong>进程被杀</strong>的介绍，因为它很容易和<strong>Task中Activity销毁</strong>混淆</p>
+<h2 id="Task中Activity销毁-vs-进程被杀"><a href="#Task中Activity销毁-vs-进程被杀" class="headerlink" title="Task中Activity销毁 vs 进程被杀"></a>Task中Activity销毁 vs 进程被杀</h2><p>我们先看下再ActivityManagerService中进程Process和Task的关系</p>
+<p><img src="/images/Task&amp;Process.gif" alt="Task&amp;Process"></p>
+<ol>
+<li><code>ActivityManagerService</code>通过一个列表<code>mHistory</code>来管理所有<code>ActivityRecord</code></li>
+<li>相同<code>TaskRecord</code>中的<code>ActivityRecord</code>在列表中处于连续位置</li>
+<li>同一个<code>TaskRecord</code>中的<code>ActivityRecord</code>可能处于不同的<code>ProcessRecord</code>中</li>
+</ol>
+<p>由于以下两个因素，使得很难找到Task和进程之间关联的清晰线索。</p>
+<ul>
+<li>同一Task中的Activity可能属于不同进程</li>
+<li>进程中不仅有Activity，还有Service和BroadcastReceiver</li>
+</ul>
+<p>先看<strong>Task中Activity销毁</strong></p>
+<ul>
+<li>处理的问题：一个进程内部，前后台Task的资源协调</li>
+<li>触发时机：进程使用的内存接近上限时（根据机型不同，大约在64M～256M之间）</li>
+</ul>
+<p>再看<strong>进程被杀</strong></p>
+<ul>
+<li>处理的问题：系统控制中，多进程之间的资源协调</li>
+<li>触发时机：整个系统使用的内存接近机器配置的内存上限时</li>
+</ul>
+<p>我们以一个简化的例子讨论两者的关系。假设：</p>
+<ul>
+<li>单进程最大可使用内存为100M，进程使用内存超过90M时会触发后台Task销毁。</li>
+<li>系统总可用内存为200M，系统使用内存超过190M时会触发后台进程被杀。</li>
+<li>系统中运行着3个进程，他们在三个Task中的分布和内存使用如下</li>
+<li>Task1处于前台运行</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Momory Usage</th>
+<th style="text-align:center">Process1</th>
+<th style="text-align:center">Process2</th>
+<th style="text-align:center">Process 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Task1</td>
+<td style="text-align:center">60M</td>
+<td style="text-align:center">20M</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">Task2</td>
+<td style="text-align:center">20M</td>
+<td style="text-align:center">20M</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">Task3</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">40M</td>
+</tr>
+</tbody>
+</table>
+<p>如果T1 P1部分消耗的内存由60M上升到75M，由于P1的总内存消耗达到95M，所以会导致P1 T2中的Activity被销毁。</p>
+<p>如果T1 P2部分消耗的内存由20M上升到50M，会导致系统总内存消耗达到190M。此时三个Process中，P1和P2和前台Task关联，优先级较高，所以系统会杀掉P3。</p>
+<p>这个例子，只是对两者关系的一个简要说明。系统对进程的实际处理方式要复杂得多！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/12/是时候使用SaveState了/" rel="next" title="是时候使用SaveState了">
+                <i class="fa fa-chevron-left"></i> 是时候使用SaveState了
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/18/一次搞定Process和Task/" rel="prev" title="一次搞定Process和Task">
+                一次搞定Process和Task <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BloodOnTrack.jpeg"
+               alt="黄怡菲" />
+          <p class="site-author-name" itemprop="name">黄怡菲</p>
+          <p class="site-description motion-element" itemprop="description">各种杂七杂八的技术</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄怡菲</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

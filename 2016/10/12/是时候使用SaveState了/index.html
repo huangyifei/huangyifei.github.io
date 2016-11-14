@@ -1,0 +1,636 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="是时候使用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
+本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
+什么是Sa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="是时候使用SaveState了">
+<meta property="og:url" content="http://www.huangyifei.info/2016/10/12/是时候使用SaveState了/index.html">
+<meta property="og:site_name" content="黄怡菲的博客">
+<meta property="og:description" content="是时候使用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
+本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
+什么是Sa">
+<meta property="og:updated_time" content="2016-10-13T02:07:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="是时候使用SaveState了">
+<meta name="twitter:description" content="是时候使用SaveState了Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。
+这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。
+本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过
+什么是Sa">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.huangyifei.info/2016/10/12/是时候使用SaveState了/"/>
+
+
+  <title> 是时候使用SaveState了 | 黄怡菲的博客 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">黄怡菲的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">技术大杂烩</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                是时候使用SaveState了
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-12T22:05:29+08:00" content="2016-10-12">
+              2016-10-12
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="是时候使用SaveState了"><a href="#是时候使用SaveState了" class="headerlink" title="是时候使用SaveState了"></a>是时候使用SaveState了</h1><p>Android系统在5.0时，对进程内的内存管理做了一个优化，但并没有明确的文档说明这个优化。</p>
+<p>这个优化为解决Android应用的内存问题，提供了一个新的思路。但如果开发者习惯于单Task的应用开发，或者从来不考虑SaveState，那开发者可能根本无法体会这个新机制的好处。</p>
+<p>本文首先从SaveState讲起，对于了解SaveState的同学，可以直接跳过</p>
+<h2 id="什么是SaveState"><a href="#什么是SaveState" class="headerlink" title="什么是SaveState"></a>什么是SaveState</h2><p>要了解什么是SaveState必须要先知道<code>Activity</code>的两个关键方法</p>
+<ul>
+<li><code>onSaveInstanceState</code></li>
+<li><code>onRestoreInstanceState</code></li>
+</ul>
+<h3 id="onSaveInstanceState时系统做了些什么"><a href="#onSaveInstanceState时系统做了些什么" class="headerlink" title="onSaveInstanceState时系统做了些什么"></a>onSaveInstanceState时系统做了些什么</h3><p>在<code>Activity</code>被回收之前，系统会调用<code>onSaveInstanceState(Bundle outState)</code>来保存<code>View</code>的状态，并到传入的<code>outState</code>对象中。</p>
+<ol>
+<li>保存Window</li>
+<li>保存Fragment</li>
+<li>调用外部注册的回调方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">    outState.putBundle(WINDOW_HIERARCHY_TAG, mWindow.saveHierarchyState());</div><div class="line">    Parcelable p = mFragments.saveAllState();</div><div class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</div><div class="line">        outState.putParcelable(FRAGMENTS_TAG, p);</div><div class="line">    &#125;</div><div class="line">    getApplication().dispatchActivitySaveInstanceState(<span class="keyword">this</span>, outState);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="onRestoreInstanceState时系统做了些什么"><a href="#onRestoreInstanceState时系统做了些什么" class="headerlink" title="onRestoreInstanceState时系统做了些什么"></a>onRestoreInstanceState时系统做了些什么</h3><p>在<code>Activity</code>被重新创建时，会通过<code>onCreate(Bundle savedInstanceState)</code>和<code>onRestoreInstanceState(Bundle savedInstanceState)</code>传入保存的状态信息并恢复<code>View</code>的状态。</p>
+<ol>
+<li>onCreate重建Fragment</li>
+<li>onRestoreInstanceState恢复Window状态</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (DEBUG_LIFECYCLE) Slog.v(TAG, <span class="string">"onCreate "</span> + <span class="keyword">this</span> + <span class="string">": "</span> + savedInstanceState);</div><div class="line">    <span class="keyword">if</span> (mLastNonConfigurationInstances != <span class="keyword">null</span>) &#123;</div><div class="line">        mFragments.restoreLoaderNonConfig(mLastNonConfigurationInstances.loaders);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (mActivityInfo.parentActivityName != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (mActionBar == <span class="keyword">null</span>) &#123;</div><div class="line">            mEnableDefaultActionBarUp = <span class="keyword">true</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mActionBar.setDefaultDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (savedInstanceState != <span class="keyword">null</span>) &#123;</div><div class="line">        Parcelable p = savedInstanceState.getParcelable(FRAGMENTS_TAG);</div><div class="line">        mFragments.restoreAllState(p, mLastNonConfigurationInstances != <span class="keyword">null</span></div><div class="line">                ? mLastNonConfigurationInstances.fragments : <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">    mFragments.dispatchCreate();</div><div class="line">    getApplication().dispatchActivityCreated(<span class="keyword">this</span>, savedInstanceState);</div><div class="line">    <span class="keyword">if</span> (mVoiceInteractor != <span class="keyword">null</span>) &#123;</div><div class="line">        mVoiceInteractor.attachActivity(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">    mCalled = <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mWindow != <span class="keyword">null</span>) &#123;</div><div class="line">        Bundle windowState = savedInstanceState.getBundle(WINDOW_HIERARCHY_TAG);</div><div class="line">        <span class="keyword">if</span> (windowState != <span class="keyword">null</span>) &#123;</div><div class="line">            mWindow.restoreHierarchyState(windowState);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Window在save和restore时对View的处理"><a href="#Window在save和restore时对View的处理" class="headerlink" title="Window在save和restore时对View的处理"></a>Window在save和restore时对View的处理</h3><ol>
+<li>Save时，遍历View的树状结构调用 <code>Parcelable onSaveInstanceState()</code></li>
+<li>以View的id为key在Window的<code>SparseArray&lt;Parcelable&gt;</code>中保存这些 <code>Parcelable</code></li>
+<li>Restore时，Window从<code>savedInstanceState</code>获取View的<code>savedStates</code></li>
+<li>遍历View的树状结构调用 <code>onRestoreInstanceState(Parcelable state)</code></li>
+<li>View根据id获取自己的state并恢复</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ol>
+<li>Save和Restore的机制主要是用于保存和恢复View的</li>
+<li>没有id的View是不会被保存状态的</li>
+<li>如果id重复，则View的状态会被覆盖</li>
+<li>被保存的Fragment会在onCreate中被自动创建和添加到FragmentActivity中</li>
+<li>被保存的View不会被自动创建，只是通过id获取savedInstance用于更新View</li>
+</ol>
+<p>关于SaveState的详细介绍可以参考文章<a href="http://www.jianshu.com/p/520e6b47c57b" target="_blank" rel="external">Android中SaveState原理分析</a></p>
+<h2 id="为什么开始使用SaveState"><a href="#为什么开始使用SaveState" class="headerlink" title="为什么开始使用SaveState"></a>为什么开始使用SaveState</h2><h3 id="为什么很多人不重视SaveState"><a href="#为什么很多人不重视SaveState" class="headerlink" title="为什么很多人不重视SaveState"></a>为什么很多人不重视SaveState</h3><p>我们先了解下会用到Restore机制的地方</p>
+<ol>
+<li><code>FragmentStatePagerAdapter</code>用于在ViewPager中使用可回收和重建的<code>Fragment</code></li>
+<li><p>应用Crash时，当前页面被销毁，前一个页面被Restore</p>
+<ul>
+<li>在4.0之前，系统不会自动重启应用</li>
+<li>在4.0之后，系统会自动重启，并通过Restore机制恢复Crash的页面。</li>
+</ul>
+</li>
+</ol>
+<p><code>FragmentStatePagerAdapter</code>中考虑SaveState是必须的，所以大家都会<strong>被迫</strong>处理SaveState的问题。</p>
+<p>大多数开发者不会考虑Crash重建的问题，所以SaveState很少被开发者重视。而认真考虑过Crash重建的开发者一定不会对SaveState陌生。</p>
+<h3 id="5-0的新机制"><a href="#5-0的新机制" class="headerlink" title="5.0的新机制"></a>5.0的新机制</h3><p>在5.0中，SaveState有了新的作用，稍加利用，它会帮你解决<code>OutOfMemory</code>。而根据Google的统计，到今年下半年，Android5.0及以上的系统占比将超过50%。</p>
+<p>要触发这个新机制，你的应用必须是多Task结构的。关于Task，那又是一个很大的话题，下面我只用一个简单的例子看看这个新机制。</p>
+<p>演示代码可以通过<a href="https://github.com/huangyifei/AndroidExample/releases/tag/SaveStateA" target="_blank" rel="external">git仓库下载</a></p>
+<p>这里看看关键的ActivivtyOne.java</p>
+<ul>
+<li>ActivityOne是standard</li>
+<li>ActivityTwo是singleInstance，所以他会在单独的新的Task中</li>
+<li>AcitivyOne可以启动ActivityTwo</li>
+<li>ActivityOne可以不断消耗内存</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActivityOne</span> <span class="keyword">extends</span> <span class="title">BaseActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">boolean</span> forceOom = <span class="keyword">false</span>;</div><div class="line">    List&lt;Bitmap&gt; memory = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_one);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">launchTwo</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        ActivityTwo.launch(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 第一次点击使内存接近进程能获取的内存上限,再次点击触发OOM</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">consumeMem</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">                    <span class="keyword">if</span> (!forceOom &amp;&amp; isLowMemory()) &#123;</div><div class="line">                        forceOom = <span class="keyword">true</span>;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                    memory.add(Bitmap.createBitmap(<span class="number">1000</span>, <span class="number">1000</span>, Bitmap.Config.ARGB_8888));</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        Thread.sleep(<span class="number">100</span>);</div><div class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 判断已使用的内存是否接近了单进程的内存上限</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLowMemory</span><span class="params">()</span> </span>&#123;</div><div class="line">        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</div><div class="line">        <span class="keyword">long</span> total = Runtime.getRuntime().totalMemory() / (<span class="number">1024l</span> * <span class="number">1024l</span>);</div><div class="line">        <span class="keyword">int</span> max = activityManager.getMemoryClass();</div><div class="line">        Log.w(getClass().getSimpleName(), total + <span class="string">"/"</span> + max);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (total &gt; activityManager.getMemoryClass() * <span class="number">0.85</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">launch</span><span class="params">(Activity activity)</span> </span>&#123;</div><div class="line">        activity.startActivity(<span class="keyword">new</span> Intent(activity, ActivityOne.class));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>操作步骤：</p>
+<ol>
+<li>ActivityOne启动ActivityTow</li>
+<li>ActivityTwo启动ActivityOne，从而切换到老的Task中，ActivityTwo不会被销毁</li>
+<li>ActivityOne不断消耗内存，直到接近进程使用内存的上限（Android系统对每个进程使用的最大内存有一个限制）</li>
+</ol>
+<p>这时通过logcat你会看到5.0的不同：</p>
+<ul>
+<li>5.0之前：不会有什么事情发生。再次点击消耗内存，会OOM，整个进程被杀。</li>
+<li>5.0及之后：<code>ActivityTwo#OnDestroy</code>会被调用，这时再启动ActivityTwo，可以看到<code>ActivityTwo#onRestoreInstanceState</code>的调用。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">W/ActivityOne: <span class="number">83571877</span>-onCreate: TaskId-<span class="number">7551</span></div><div class="line">W/ActivityTwo: <span class="number">128141518</span>-onCreate: TaskId-<span class="number">7552</span></div><div class="line">W/ActivityOne: <span class="number">83571877</span>-onSaveInstanceState</div><div class="line">W/ActivityOne: <span class="number">219591424</span>-onCreate: TaskId-<span class="number">7551</span></div><div class="line">W/ActivityTwo: <span class="number">128141518</span>-onSaveInstanceState</div><div class="line">W/ActivityOne: <span class="number">23</span>/<span class="number">192</span></div><div class="line">W/ActivityOne: <span class="number">42</span>/<span class="number">192</span></div><div class="line">W/ActivityOne: <span class="number">88</span>/<span class="number">192</span></div><div class="line">W/ActivityOne: <span class="number">111</span>/<span class="number">192</span></div><div class="line">W/ActivityOne: <span class="number">157</span>/<span class="number">192</span></div><div class="line"></div><div class="line">以下是<span class="number">5.0</span>系统上才会出现的</div><div class="line"></div><div class="line">W/ActivityTwo: <span class="number">128141518</span>-onDestroy</div><div class="line">W/ActivityOne: <span class="number">176</span>/<span class="number">192</span></div><div class="line">W/ActivityTwo: <span class="number">80252517</span>-onCreate: TaskId-<span class="number">7552</span></div><div class="line">W/ActivityTwo: <span class="number">80252517</span>-onRestoreInstanceState</div><div class="line">W/ActivityTwo: <span class="number">80252517</span>-onNewIntent</div><div class="line">W/ActivityOne: <span class="number">219591424</span>-onSaveInstanceState</div></pre></td></tr></table></figure>
+<p>因此我们可以得出结论：</p>
+<p><strong><em>5.0之后，Android进程在遇到内存瓶颈时，会通过主动销毁进程中的Acitivty来释放内存。这些被销毁的Activity都属于后台Task，当被销毁的Activity需要重新出现时，会触发Restore机制</em></strong></p>
+<p>当然，这个结论又会引起很多疑问。</p>
+<ol>
+<li>为什么不销毁当前Task中的后台Activity？</li>
+<li>如果后台Task中有多个Activity是一起销毁吗？如果后台Task中的多个Activity是属于不同的进程呢？</li>
+<li>……</li>
+</ol>
+<p>关于这些问题，需要分析源码才能找到答案，但我不希望这篇文章变成对Android源码的一次分析。我将在下篇文章，继续介绍怎么处理SaveState。</p>
+<p>当然，即使没有SaveState在5.0上带来的好处，正确处理页面的SaveState也是保证Android应用程序健壮性的一个重要部分。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/13/怎么处理SaveState/" rel="prev" title="怎么处理SaveState">
+                怎么处理SaveState <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BloodOnTrack.jpeg"
+               alt="黄怡菲" />
+          <p class="site-author-name" itemprop="name">黄怡菲</p>
+          <p class="site-description motion-element" itemprop="description">各种杂七杂八的技术</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄怡菲</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
