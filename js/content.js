@@ -72,7 +72,7 @@ var content_map = {
                    <img class="img-responsive img-blog" src="images/item/abroad_4_6.jpg" width="100%" alt="" />\
                    <div class="col-md-4 col-sm-6">\
 	                    <div class="widget">\
-	                        <h3>主办单位</h3>\
+	                        <h4>主办单位</h4>\
 	                        <ul>\
 	                            <li>西班牙阿维拉市政府</li>\
 	                            <li>西班牙卡斯蒂亚及莱昂地区文化教育处</li>\
@@ -83,7 +83,7 @@ var content_map = {
 	                </div>\
 	                <div class="col-md-4 col-sm-6">\
 	                    <div class="widget">\
-	                        <h3>支持单位</h3>\
+	                        <h4>支持单位</h4>\
 	                        <ul>\
 	                            <li>西班牙驻华大使馆</li>\
 	                            <li>中国驻西班牙大使馆</li>\
@@ -95,11 +95,11 @@ var content_map = {
 	                </div>\
 	                <div class="col-md-4 col-sm-6">\
 	                    <div class="widget">\
-	                        <h3>合作机构</h3>\
+	                        <h4>合作机构</h4>\
 	                        <ul>\
 	                            <li>西班牙阿维拉艺术中心</li>\
 	                            <li>西班牙国家音乐厅</li>\
-	                            <li>意大利维托索&柏坎图国际音乐节</li>\
+	                            <li>意大利维托索&amp;柏坎图国际音乐节</li>\
 	                            <li>意大利卢卡市百合花剧院</li>\
 	                            <li>意大利普契尼基金会</li>\
 	                        </ul>\
