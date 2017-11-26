@@ -170,120 +170,147 @@ var content_map = {
 		title: "德国钢琴家马丁·柯莱特独奏音乐会",
 		subtitle: "国际约翰内斯·勃拉姆斯大赛和德国全国音乐大赛获奖者",
 		cover: "images/item/domestic_4_bg.JPG",
-		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
-                   <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
-                   <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
-                   <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+		content:  '<p>在过去的几年中，马丁·柯莱特作为钢琴家和室内乐演奏家出现在众多重要的音乐表演场地，声名鹊起。自从斩获了国际约翰内斯·勃拉姆斯大赛（钢琴独奏）和德国全国音乐大赛（与他的单簧管搭档塞巴斯蒂安·曼茨）后，他以成为世界各大音乐节上备受欢迎的座上宾，如卢塞恩音乐节，石勒苏益格-荷尔斯泰因音乐节、 海德堡和梅克伦堡-前波莫瑞州音乐节等等。</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_4_1.jpg" width="100%" alt="" />\
+                   <p>此外，他还受邀到欧洲各国以及北非等国家进行巡演。作为重要的室内乐演奏家，马丁定期与ARD和ECHO古典回声大奖得主，世界著名交响乐团首席，著名教授等等进行合作并同台演出。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_4_2.jpg" width="100%" alt="" />\
+                   <p>他与塞巴斯蒂安·曼茨，丹妮拉 · 科赫，雅克 ·阿门以及查尔斯 · 安东尼分别组建了二重奏乐团，还受邀与萨宾娜·迈耶，皮特·巴克（米洛四重奏），阿玛柯德以及舒曼四重奏进行合作。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_4_3.jpg" width="100%" alt="" />\
+                   <p>马丁·柯莱特与塞巴斯蒂安·曼茨合作，与Genuin唱片合作出版了首张专辑，与Avi唱片和科隆德意志之声合作录制了美国著名作曲家的作品专辑。他的多场演出都被各个德国广播电台进行剪辑播放，因此会经常在广播里听到马丁·柯莱特的音乐作品。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_4_4.jpg" width="100%" alt="" />\
+                   <p>除了古典音乐领域，马丁对阿根廷探戈音乐也充满热情，并热衷于编曲。2008年，他建立了Cuarteto SolTango乐团，乐团很快在国际探戈艺术节，石勒苏益格-荷尔斯泰因音乐节等艺术节上受到专业人士和观众们的好评。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_4_5.jpg" width="100%" alt="" />'
 	},
 	"domestic-5" : {
 		title: "比利时青年钢琴家凡·德·威尔第·雅尼克独奏音乐会",
 		subtitle: "维托索&amp;柏坎图国际音乐大师班艺术节冠军",
 		cover: "images/item/domestic_5_bg.JPG",
-		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
-                   <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
-                   <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
-                   <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+		content:  '<p>出生于比利时音乐世家的雅尼克，从小音乐赋予他激情。作为一个钢琴家和音乐人，雅尼克在音乐领域中表现出更多的是热情，细腻与睿智。</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_5_1.jpg" width="100%" alt="" />\
+                   <p>雅尼克作为一个独奏者及室内乐成员，拥有丰富的演出经历，并和多个著名指挥合作，如艾瑞克·雷德汉德勒，埃蒂安·席本斯，米歇尔·霍夫石坦德等等。多个与他合作的室内乐成员都来自柏林爱乐。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_5_2.jpg" width="100%" alt="" />\
+                   <p>雅尼克在世界许多钢琴比赛中崭露头角，例如意大利卢卡维托索&柏坎图国际艺术节，意大利博尔扎诺布索尼钢琴比赛，伊丽莎白女王比赛等等。并在世界各地也举办音乐独奏会，例如德国柏林爱乐乐团音乐厅，雅典卫城博物馆，纽约林肯中心等等。</p>'
 	},
 	"domestic-6" : {
 		title: "奥地利钢琴家科妮丽雅·赫尔曼独奏音乐会",
 		subtitle: "萨尔兹堡的音乐世家，国际巴赫音乐大赛最年轻的优胜者",
 		cover: "images/item/domestic_6_bg.JPG",
-		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
-                   <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
-                   <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
-                   <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+		content:  '<p>科妮丽雅·赫尔曼出生于萨尔兹堡的音乐世家，曾前往维也纳、布达佩斯进修钢琴技巧。她所追随的名师有亚历山大·洛克赫、默里·佩拉希亚、安德拉斯·希夫和阿尔弗雷德·布伦德尔等。</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_6_1.jpg" width="100%" alt="" />\
+                   <p>1990年，赫尔曼在莱比锡举行的国际巴赫音乐大赛中一举夺魁，成为该项赛事有史以来最年轻的优胜者。1999年，她在萨尔兹堡举行的国际莫扎特音乐大赛中获得特别奖。2002年，她在萨尔兹堡音乐节上首次献技。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_6_2.jpg" width="100%" alt="" />\
+                   <p>赫尔曼曾与众多顶级乐团同台演出，其中有萨尔兹堡室内乐团、萨尔兹堡莫札特纪念馆交响乐团、以色列室内交响乐团、新日本爱乐乐团、NHK交响乐团、MDR交响乐团、东京都市交响乐团、维也纳室内交响乐团。与她合作过的优秀指挥家有克里斯蒂安·艾明、詹姆斯·朱特、曼弗雷德·霍内克、纳维尔·马里纳爵士、罗杰·诺灵顿爵士、史蒂芬·桑德林、休伯特·索丹特等。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_6_3.jpg" width="100%" alt="" />\
+                   <p>赫尔曼在许多世界知名的音乐场馆留下了自己的足迹，其中有苏黎世市政音乐厅、日内瓦维多利亚音乐厅、莱比锡布业会堂、海德堡市政音乐厅、林茨布鲁克纳音乐厅、马德里皇家音乐厅、特拉维夫艺术博物馆、日本三得利音乐厅和维也纳金色大厅等等。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_6_4.jpg" width="100%" alt="" />\
+                   <p>赫尔曼还是一位广受追捧的室内音乐家。她的合作伙伴囊括了克里斯蒂安·阿尔滕伯格、弗朗兹·巴托洛米、帕特里克·德蒙戈、克里斯多夫·金兹等出类拔萃的音乐家。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_6_5.jpg" width="100%" alt="" />'
 	},
 	"domestic-7" : {
 		title: "意大利钢琴家理查德·切凯蒂独奏音乐会",
 		subtitle: "他所创建的意大利“亲密之声”三重奏享誉世界",
 		cover: "images/item/domestic_7_bg.JPG",
 		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
+				   <img class="img-responsive img-blog" src="images/item/domestic_7_1.jpg" width="100%" alt="" />\
                    <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
+                   <img class="img-responsive img-blog" src="images/item/domestic_7_3.jpg" width="100%" alt="" />\
                    <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
                    <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+                   <img class="img-responsive img-blog" src="images/item/domestic_7_5.jpg" width="100%" alt="" />\
+                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>'
 	},
 	"domestic-8" : {
 		title: "鲍里斯·贝尔曼独奏音乐会",
 		subtitle: "当代钢琴作品演绎的大家、俄罗斯钢琴学派的代表人物、以色列钢琴家、美国钢琴家",
 		cover: "images/item/domestic_8_bg.JPG",
-		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
-                   <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
-                   <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
-                   <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+		content:  '<p>业界给鲍里斯·贝尔曼戴上了各种桂冠：“当代钢琴作品演绎的大家、俄罗斯钢琴学派的代表人物、以色列钢琴家、美国钢琴家”等等。我们非常荣幸的邀请到鲍里斯·贝尔曼先生担任“天赋钢琴家”大赛国际评委会名誉主席</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_8_1.png" width="100%" alt="" />\
+                   <p>无论作为现任耶鲁大学音乐学院钢琴系主任还是在世界各大著名钢琴比赛（如英国的里兹国际钢琴大赛、爱尔兰的都柏林国际钢琴大赛、以色列的鲁宾斯坦钢琴大赛） 中担任评委，鲍里斯·贝尔曼都是一个标识，一个世界顶级大师的标识。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_8_2.jpg" width="100%" alt="" />\
+                   <p>Boris Berman, 鲍里斯·贝尔曼出生于俄罗斯莫斯科，曾任音乐耶鲁大学钢琴系的主任。上海音乐学院名誉教授,丹麦皇家音乐学院名誉教授。 鲍里斯·贝尔曼的技巧和艺术性在全球六大洲超过四十多国的观众中众所周知。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_8_3.jpg" width="100%" alt="" />\
+                   <p>他与皇家大会堂管弦乐团、布商大厦乐团、伦敦爱乐乐团、多伦多交响乐团、以色列爱乐乐团、明尼苏达交响乐团、底特律交响乐团、休斯顿交响乐团、亚特兰大交响乐团、圣彼得堡爱乐乐团、苏格兰皇家乐团的合作演出广受赞誉。他还在万宝路、滑铁卢、拉维尼亚和以色列等等一系列音乐节上演出。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_8_4.jpg" width="100%" alt="" />\
+                   <p>贝尔曼的钢琴演绎融贯古今，他更是俄罗斯当代钢琴作品的倡导者，许多当代作曲家的钢琴作品如施尼特凯、特尼索夫、勋伯格、斯特克豪森、贝利奥、利盖蒂的当代钢琴作品都是由他在俄罗斯首演。他是斯克里亚宾、斯特拉文斯基、拉赫玛尼诺夫和普罗科菲耶夫等俄罗斯作曲家钢琴作品的权威诠释者。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_8_5.JPG" width="100%" alt="" />'
 	},
 	"domestic-9" : {
 		title: "国际钢琴盛典-天赋钢琴家大赛",
 		subtitle: "暨“意大利维托索&amp;柏坎图国际音乐节”中国预选赛",
 		cover: "images/item/domestic_9_bg.png",
-		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
-                   <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
-                   <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
-                   <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+		content:  '<p>2016国际钢琴盛典“天赋钢琴家”大赛首次携手“意大利维托索&柏坎图国际音乐节”和“上海喜玛拉雅国际钢琴艺术节”，为中国的钢琴爱好者们打造出一场国际钢琴盛宴。</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_9_1.png" width="100%" alt="" />\
+		           <p>本次大赛旨在为中国广大钢琴学习者、钢琴爱好者以及青少年钢琴家提供一个展示自己的平台和走出学院、走向国际舞台的机会。这不仅是一次开拓国际视野、提升钢琴技巧、增进国际音乐界之间交流的绝佳机会, 更是一个展示青年演奏家风采、体验不同文化与艺术灵感碰撞融合的国际舞台。</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_9_2.png" width="100%" alt="" />\
+                   <p>2016国际钢琴盛典“天赋钢琴家”大赛期间，主办方在举办音乐比赛的同时，还将为参赛者举办场景音乐会；并结合“2016上海喜玛拉雅国际钢琴艺术节”，为广大音乐爱好者提供国际大师的音乐会、大师班，公开彩排以及获奖选手经验分享会等丰富多彩的活动。为选手们提供全方位的钢琴艺术体验，共同参与到这场钢琴盛宴中。所有参赛者也将有机会赴意大利，参加丰富多彩的“意大利维托索&柏坎图国际音乐节”交流活动。双节跨国比赛，盛况空前。</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_9_3.png" width="100%" alt="" />\
+                   <h3>2016国际钢琴盛典“天赋钢琴家”选拔赛组委会</h3>\
+                   <div class="col-md-4 col-sm-6">\
+	                    <div class="widget">\
+	                        <h4>主办单位</h4>\
+	                        <ul>\
+	                            <li>西班牙阿维拉市政府</li>\
+	                            <li>西班牙卡斯蒂亚及莱昂地区文化教育处</li>\
+	                            <li>西班牙阿维拉维多利亚音乐学院</li>\
+	                            <li>国际青少年文化艺术发展协会</li>\
+	                        </ul>\
+	                    </div>    \
+	                </div>\
+	                <div class="col-md-4 col-sm-6">\
+	                    <div class="widget">\
+	                        <h4>支持单位</h4>\
+	                        <ul>\
+	                            <li>西班牙驻华大使馆</li>\
+	                            <li>中国驻西班牙大使馆</li>\
+	                            <li>西班牙亚洲之家</li>\
+	                            <li>西班牙阿维拉大教堂</li>\
+	                            <li>西班牙阿维拉北利恩索艺术中心</li>\
+	                        </ul>\
+	                    </div>    \
+	                </div>\
+	                <div class="col-md-4 col-sm-6">\
+	                    <div class="widget">\
+	                        <h4>合作机构</h4>\
+	                        <ul>\
+	                            <li>西班牙阿维拉艺术中心</li>\
+	                            <li>西班牙国家音乐厅</li>\
+	                            <li>意大利维托索&amp;柏坎图国际音乐节</li>\
+	                            <li>意大利卢卡市百合花剧院</li>\
+	                            <li>意大利普契尼基金会</li>\
+	                        </ul>\
+	                    </div>\
+	                </div>'
 	},
 	"domestic-10" : {
 		title: "荷兰阿姆斯特丹木管五重奏",
 		subtitle: "“最传神的、最迷人的”木管五重奏",
 		cover: "images/item/domestic_10_bg.JPG",
-		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
-                   <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
-                   <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
-                   <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
-                   <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
-                   <h3>AGNIESZKA KOZŁO</h3>\
-                   <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+		content:  '<p>阿姆斯特丹木管五重奏的五位音乐家对音乐、曲目的创新有着非常高的要求，和非传统方式演绎的共同追求下，建立了阿姆斯特丹木管五重奏。他们每年都会推出全新的五重奏、三重奏和四重奏木管曲目。由于他们不但与深谙古典音乐的听众分享美妙之外，而且还擅长令那些不甚了解古典音乐的听众就此爱上木管乐器，因此，他们的音乐会被听众和评论界称为“最传神的、最迷人的”。他们还积极参与各类面向儿童和普及古典音乐的教育性音乐会，以强大表现力和现场感染力吸引了荷兰及欧洲各地的歌唱家、作曲家和剧场导演与之合作。</p>\
+				   <img class="img-responsive img-blog" src="images/item/domestic_10_1.JPG" width="100%" alt="" />\
+                   <p>阿姆斯特丹五重奏的演出足迹遍布荷兰及欧洲各地，特别是阿姆斯特丹皇家音乐厅、鹿特丹DeDoelen音乐厅、奈美根卢克斯剧院。他们的演出定期由荷兰国家古典音乐电台直播。他们曾参加奥兰多音乐节、荷兰古典音乐节、Gelderse夏季音乐节等。</p>\
+                   <p>2007年，他们还有幸受到荷兰女王的邀请为皇室演出。他们的出色音乐表现受到现代作曲家的关注，曾受邀首演荷兰作曲家亨利•凯德、约翰•德维特和约克•范德尔等人作品。</p>\
+                   <p>“他们的声音统一、和谐，屏息聆听下可分辨那些色彩层次丰富的细微差别。他们是五个声音的魔术师！”</p>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_10_2.JPG" width="100%" alt="" />\
+                   <h3>蒂姆•文特索尔——长笛</h3>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_10_5.jpg" width="100%" alt="" />\
+                   <p>蒂姆7岁起在德国学习长笛。1998年以优异成绩进入海牙皇家音乐学院，师从名师荷兰长笛家里恩•德海德（Rien de Reede）、蒂斯•霍尔达（ThiesRoorda）和威尔士长笛演奏家艾米丽•贝南（Emily Beynon），最终取得硕士学位。他还曾在2001至2002年以全额奖学金赴英国进修。</p>\
+                   <p>他不仅在独奏和室内乐演奏上成绩斐然，也经常受邀与荷兰和欧洲的乐团合作，其中包括北荷兰交响乐团、马斯特里赫特林伯格交响乐团、荷兰广播交响乐团、德国明斯特交响乐团、德国南威斯特法伦爱乐乐团等。</p>\
+                   <p> 他曾作为独奏家参加荷兰古典音乐节、Gelderse夏季音乐节、斯蒂夫•来客音乐节，并受邀在荷兰艺术节和北海爵士节上演出。</p>\
+                   <h3>玛莱伊•卡特琳娜·克莱门斯——双簧管</h3>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_10_6.jpg" width="100%" alt="" />\
+                   <p>玛莱伊幼年入选阿姆斯特丹音乐学院“天赋少年”课程，后入海牙皇家音乐学院师从阿里•格伦（Ali Groen）和鲍琳•奥斯顿里克（Pauline Oostenrijk）。21岁时受著名双簧管演奏家罗兰•派赫诺（Roland Perrenoud）及毛里斯•布赫格（Maurice Bourgue）邀请赴日内瓦音乐学院深造，2008年以满分获得演奏证书。</p>\
+                   <p>她曾参加过世界知名双簧管演奏家克劳斯•贝克（Klaus Becker）、欧玛•佐伯利（Omar Zoboli）、巴特•施尼曼（Bart Schneeman）和保罗•古德曼（Bart Schneeman）大师课。她经常受邀与海牙爱乐乐团、林伯格交响乐团、荷兰小交响乐团和北荷兰乐团合作。她曾获得1998年Dubbelriet大赛、2002年克里斯蒂娜公主大赛和2005年意大利国际管乐器比赛奖项。这些奖项为她赢得在荷兰、意大利各重要音乐场地的演出，其中包括阿姆斯特丹皇家音乐大厅独奏音乐会。</p>\
+                   <h3>汉卡•卡罗拉·苏菲·克鲁特——单簧管</h3>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_10_7.JPG" width="100%" alt="" />\
+                   <p>汉卡自幼擅长钢琴和单簧管两种乐器，在阿姆斯特丹皇家音乐学院学习单簧管后，曾参加德国演奏家拉尔夫•马努、卡尔•莱斯特、比利时演奏家罗兰德•亨德里克斯和布里安•波拉德等世界单簧管名家大师课。</p>\
+                   <p>她目前任北荷兰交响乐团第二单簧管。同时，她经常受邀在荷兰爱乐乐团、荷兰室内乐团、荷兰广播爱乐乐团、荷兰广播室内乐团、荷兰小交响乐团、海牙爱乐乐团、荷兰皇家海军大乐团、荷兰皇家空军乐团等众多乐团合作，担任独奏或替补单簧管首席。她曾在著名指挥家弗兰茨•与布鲁根（FruansBruggen）、雅普•冯茨威顿（Jaap van Zweden）、兰贝特•德李由（Reinbert de Leeuw）和尼姆•雅尔维（NeemeJarvi）执棒下担任独奏。</p>\
+                   <h3>马丁•安德里亚· 阿佩洛——法国号</h3>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_10_8.jpg" width="100%" alt="" />\
+                   <p>马丁八岁时，开始了学习法国号的生涯，15岁便成为国家青年管乐团一员，2014年以优等生的名号毕业并获得奖学金，并师从Paul van Zelm继续在科隆音乐艺术学院进修。 在学习期间，马丁也是皇家大会堂学院管弦乐团一员，他也与荷兰著名交响乐团鹿特丹爱乐以及皇家大会堂管弦乐团合作. 当然他常被邀约和著名指挥合作，例如Valery Gergiev, Yannick Nezet-Seguin, Sir Mark Elder 等等。</p>\
+                   <h3>玛莱伊可·盖特杰·杰斯特拉——巴松管</h3>\
+                   <img class="img-responsive img-blog" src="images/item/domestic_10_9.JPG" width="100%" alt="" />\
+                   <p>玛莱伊可1985年出生于阿姆斯特丹，12岁开始专业巴松管演奏。她曾分别在荷兰海牙师从约翰•斯坦曼（Johan Steinmann）、在马德里拜师克劳斯•图纳曼（Klaus Thunemann），在柏林师从沃尔卡•塔斯曼（Volker Tessmann），并在乌勒•克里斯蒂安•代勒（Ole Kristian Dahl）指导下获硕士学位。</p>\
+                   <p>玛莱伊可曾是荷兰国家青年交响乐团和欧盟青年乐团成员。她曾受邀以独奏身份与布莱梅爱乐室内乐团、杜塞尔多夫莱茵歌剧院乐团、苏黎世音乐厅管弦乐团、荷兰海牙管弦乐团、新欧洲乐团等合作演出维瓦尔第和莫扎特的协奏曲。</p>'
 	},
 	"teddy" : {
 		title: "泰迪·爱·冒险",
