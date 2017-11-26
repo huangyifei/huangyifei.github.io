@@ -154,17 +154,17 @@ var content_map = {
 		subtitle: "从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目",
 		cover: "images/item/domestic_3_bg.JPG",
 		content:  '<p>拉威尔双钢琴组合是波兰顶尖双钢琴组合之一。两位钢琴家师从Maja Nosowska，毕业于肖邦音乐学院，之后在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，受到波兰一代钢琴名家扬·艾凯尔，以色列伊顿与塔米尔等等杰出钢琴家的影响，拉威尔双钢琴组合除了定期在世界各地进行巡演之外，在众多国际钢琴大赛中也崭露头角，包括在捷克耶塞尼克举行的11届国际舒伯特音乐比赛中获一等奖，在意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛中荣获二等奖等等。</p>\
-				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.JPG" width="100%" alt="" />\
+				   <img class="img-responsive img-blog" src="images/item/domestic_3_1.jpg" width="100%" alt="" />\
                    <p>从巴洛克音乐到现代音乐，拉威尔双钢琴组合拥有大量四手联弹及双钢琴曲目，并且非常具有特色，在双钢琴组合建立的短短时间里，他们与不同室内合唱团及交响乐团合作发行了多张CD, 近期录制的四手联弹作品《瞬息变幻》极具波兰特色，并获得古典届格莱美大奖——波兰古典唱片肖邦大奖。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.JPG" width="100%" alt="" />\
+                   <img class="img-responsive img-blog" src="images/item/domestic_3_2.jpg" width="100%" alt="" />\
                    <p>两位艺术家在2011年都获得了艺术博士学位，在音乐会演出之余，她们还在华沙肖邦音乐大学，华沙国立肖邦音乐学校等任职教学。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.JPG" width="100%" alt="" />\
+                   <img class="img-responsive img-blog" src="images/item/domestic_3_3.jpg" width="100%" alt="" />\
                    <h3>KATARZYNA EWA SOKOŁOWSKA</h3>\
                    <p>凯特毕业于波兰华沙肖邦音乐学院，师从扬·艾凯尔教授，2001年至20015年，作为拉威尔双钢琴成员之一，凯特继续在德国罗斯托克音乐戏剧学院进修，并于2005年获得最高荣誉学位，在欧洲进行巡演，好评如潮。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.JPG" width="100%" alt="" />\
+                   <img class="img-responsive img-blog" src="images/item/domestic_3_4.jpg" width="100%" alt="" />\
                    <h3>AGNIESZKA KOZŁO</h3>\
                    <p>Agenieszka是波兰最多才多艺的室内乐艺术家之一，1996年她与凯特创建了拉威尔双钢琴组合，由于两人默契十足，在多个国际钢琴比赛上都崭露头角，包括意大利罗马举办的瓦伦蒂诺布奇国际音乐比赛，卡塔尼塞塔钢琴比赛等等。</p>\
-                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.JPG" width="100%" alt="" />'
+                   <img class="img-responsive img-blog" src="images/item/domestic_3_5.jpg" width="100%" alt="" />'
 	},
 	"domestic-4" : {
 		title: "德国钢琴家马丁·柯莱特独奏音乐会",
