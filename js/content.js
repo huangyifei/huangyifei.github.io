@@ -329,4 +329,45 @@ var content_map = {
 				   <img class="img-responsive img-blog" src="images/item/teddy_1.png" width="100%" alt="" />\
                    <p>小Q在生日那天收到了爸妈送的四只小熊，却因为少了一只不是整套而非常伤心。难过的他突然发现四只小熊活了过来，他们决定一起去寻找那个缺少的小熊。一路上，他们经过了神奇的田野，智斗农场主夫妇，经过了美丽的森林，在猎人的帮助下，从狡猾的狐狸手中逃生。就在这样一段冒险中，小Q收获了好朋友，更收获了成长……</p>'
 	},
+	"puccini" : {
+		title: "2018普契尼国际艺术节",
+		subtitle: "2018普契尼国际艺术节",
+		cover: "images/item/puccini_cover.png",
+		content:  '<h3>贾科莫·普契尼</h3>\
+                   <p>意大利最伟大的歌剧作曲家之一，是“真实主义”歌剧乐派的代表人物，他一生写了十二部歌剧，把音乐贯穿到整部歌剧中，使之成为一个完成的整体，也使歌剧的戏剧效果和音乐效果达到了完美的统一。</p> \
+                   <img class="img-responsive img-blog" src="images/item/puccini_1.png" width="100%" alt="" />\
+        <p>著名的作品有《波西米亚人》，《托斯卡》，《蝴蝶夫人》等。</p>\
+                   <img class="img-responsive img-blog" src="images/item/puccini_2.png" width="100%" alt="" />\
+        <h3>2018普契尼国际艺术节</h3>\
+                <p>2018年为享誉世界的歌剧大师贾科莫·普契尼160周年华诞，意大利卢卡市政府，意大利普契尼基金会及意大利卢卡市百合花剧院特邀世界各地的优秀专业的合作伙伴，共同开展一系列纪念活动。</p>\
+                   <img class="img-responsive img-blog" src="images/item/puccini_3.png" width="100%" alt="" />\
+        <h3>2018普契尼国际艺术节艺术总监——大卫•兰德尔</h3>\
+        <p>大卫•兰德尔是英国著名歌剧演员，著名男高音歌唱家，伦敦皇家音乐学院教授。曾与赫伯特•冯•卡拉扬、伦纳德•伯恩斯坦、詹姆斯•莱文、丹尼尔•巴伦博伊姆、祖宾•梅塔、小泽征尔等众多著名指挥家合作演出。</p>\
+                   <img class="img-responsive img-blog" src="images/item/puccini_4.png" width="100%" alt="" />\
+                   <img class="img-responsive img-blog" src="images/item/puccini_5.png" width="100%" alt="" />\
+                   <img class="img-responsive img-blog" src="images/item/puccini_6.png" width="100%" alt="" />\
+        <h3>报名和咨询</h3>\
+        <ul>\
+        <li>黄老师 18015550279</li>\
+        <li>E-mail:<a href="mailto://sgculture@126.com">sgculture@126.com</a></li>\
+        </ul>\
+        <h3>主办单位</h3>\
+        <ul>\
+            <li>意大利普契尼基金会</li>\
+            <li>普契尼国际艺术节组委会</li>\
+            <li>苏州保利大剧院</li>\
+        </ul>\
+        <h3>承办单位</h3>\
+        <ul>\
+            <li>北京璐玛文化艺术发展有限公司</li>\
+            <li>苏州上格音集文化发展有限公司</li>\
+        </ul>\
+        <h3>支持单位</h3>\
+        <ul>\
+            <li>意大利驻华大使馆</li>\
+            <li>意大利卢卡市政府</li>\
+            <li>苏州市吴中区文化体育局</li>\
+            <li>苏州市吴中区委员会宣传部</li>\
+        </ul>'
+	}
 }
