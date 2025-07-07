@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>汉字笔顺练习</title>
+  <style>
+    body { font-family: "微软雅黑"; margin: 20px; }
+    .container { display: flex; flex-direction: column; gap: 20px; }
+    .canvas-box { width: 300px; height: 300px; border: 1px solid #ccc; }
+    button { padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 动画展示区 -->
+    <div>
+      <h3>标准笔顺演示</h3>
+      <canvas id="animCanvas" class="canvas-box"></canvas>
+    </div>
+
+    <!-- 用户书写区 -->
+    <div>
+      <h3>请在田字格书写</h3>
+      <canvas id="writeCanvas" class="canvas-box"></canvas>
+    </div>
+
+    <!-- 控制与结果区 -->
+    <div>
+      <button id="nextBtn">下一个字</button>
+      <button id="checkBtn">检查笔顺</button>
+      <div id="result" style="margin-top: 10px;"></div>
+    </div>
+  </div>
+
+  <script>
+  const 字库 = [
+    {
+      word: "大",
+      strokes: [
+        { start: [50, 100], end: [150, 100], dir: "horizontal" },
+        { start: [70, 100], end: [100, 200], dir: "left-down" },
+        { start: [130, 100], end: [180, 200], dir: "right-down" },
+      ],
+    },
+    {
+      word: "人",
+      strokes: [
+        { start: [80, 150], end: [120, 250], dir: "left-down" },
+        { start: [130, 150], end: [180, 250], dir: "right-down" },
+      ],
+    },
+  ];
+
+  let 当前字 = null;       
+  let 动画帧 = null;       
+  let 动画进度 = 0;        
+  let 当前笔划索引 = 0;    
+  let 用户笔迹 = [];       
+  let 正在书写 = false;    
+
+  const animCanvas = document.getElementById("animCanvas");
+  const writeCanvas = document.getElementById("writeCanvas");
+  const nextBtn = document.getElementById("nextBtn");
+  const checkBtn = document.getElementById("checkBtn");
+  const resultDiv = document.getElementById("result");
+
+  function initCanvas(canvas) {
+    const ctx = canvas.getContext("2d");
+    canvas.width = 300;
+    canvas.height = 300;
+    ctx.strokeStyle = "#999";
+    ctx.lineWidth = 1;
+    // 竖中线
+    ctx.beginPath();
+    ctx.moveTo(150, 0);
+    ctx.lineTo(150, 300);
+    ctx.stroke();
+    // 横中线
+    ctx.beginPath();
+    ctx.moveTo(0, 150);
+    ctx.lineTo(300, 150);
+    ctx.stroke();
+    // 上半格横线
+    ctx.beginPath();
+    ctx.moveTo(0, 75);
+    ctx.lineTo(300, 75);
+    ctx.stroke();
+    // 下半格横线
+    ctx.beginPath();
+    ctx.moveTo(0, 225);
+    ctx.lineTo(300, 225);
+    ctx.stroke();
+    // 左半格竖线
+    ctx.beginPath();
+    ctx.moveTo(75, 0);
+    ctx.lineTo(75, 300);
+    ctx.stroke();
+    // 右半格竖线
+    ctx.beginPath();
+    ctx.moveTo(225, 0);
+    ctx.lineTo(225, 300);
+    ctx.stroke();
+  }
+
+  initCanvas(animCanvas);
+  initCanvas(writeCanvas);
+
+  // ========== 笔顺动画实现 ==========
+  function playAnimation() {
+    const ctx = animCanvas.getContext("2d");
+    ctx.clearRect(0, 0, 300, 300); 
+    initCanvas(animCanvas);       
+
+    for (let i = 0; i < 当前笔划索引; i++) {
+      const stroke = 当前字.strokes[i];
+      drawStroke(ctx, stroke.start, stroke.end);
+    }
+
+    if (当前笔划索引 < 当前字.strokes.length) {
+      const currentStroke = 当前字.strokes[当前笔划索引];
+      const progress = 动画进度 / 100;
+      const start = currentStroke.start;
+      const end = currentStroke.end;
+      const currentX = start[0] + (end[0] - start[0]) * progress;
+      const currentY = start[1] + (end[1] - start[1]) * progress;
+      drawStroke(ctx, start, [currentX, currentY]);
+
+      动画进度 += 2; 
+      if (动画进度 >= 100) {
+        动画进度 = 0;
+        当前笔划索引++;
+        if (当前笔划索引 >= 当前字.strokes.length) {
+          cancelAnimationFrame(动画帧); 
+          return;
+        }
+      }
+    }
+
+    动画帧 = requestAnimationFrame(playAnimation);
+  }
+
+  function drawStroke(ctx, start, end) {
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(start[0], start[1]);
+    ctx.lineTo(end[0], end[1]);
+    ctx.stroke();
+  }
+
+  // ========== 用户书写监测（修复核心区域） ==========
+  function initWriting() {
+    writeCanvas.addEventListener("mousedown", (e) => {
+      正在书写 = true;
+      const x = e.offsetX;
+      const y = e.offsetY;
+      用户笔迹.push([[x, y]]); // 新笔划：初始包含起点
+    });
+
+    // ✨ 修复：仅当笔划有至少2个点时才绘制线段，避免数组越界
+    writeCanvas.addEventListener("mousemove", (e) => {
+      if (正在书写) {
+        const x = e.offsetX;
+        const y = e.offsetY;
+        const lastStroke = 用户笔迹[用户笔迹.length - 1]; // 当前正在写的笔划
+        lastStroke.push([x, y]); // 追加当前点到当前笔划
+        
+        // 只有笔划长度 ≥ 2 时，才绘制“前一个点 → 当前点”的线段
+        if (lastStroke.length >= 2) {
+          const ctx = writeCanvas.getContext("2d");
+          ctx.strokeStyle = "black";
+          ctx.lineWidth = 4;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          // 取“倒数第二个点”作为起点
+          const prevPoint = lastStroke[lastStroke.length - 2];
+          ctx.moveTo(prevPoint[0], prevPoint[1]);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+      }
+    });
+
+    writeCanvas.addEventListener("mouseup", () => {
+      正在书写 = false;
+    });
+  }
+
+  initWriting();
+
+  // ========== 笔顺比对逻辑 ==========
+  function compareStrokes() {
+    if (用户笔迹.length !== 当前字.strokes.length) {
+      return { isMatch: false, message: "笔划数不一致！" };
+    }
+
+    for (let i = 0; i < 当前字.strokes.length; i++) {
+      const stdStroke = 当前字.strokes[i];   
+      const userStroke = 用户笔迹[i];        
+      const userStart = userStroke[0];        
+      const userEnd = userStroke[userStroke.length - 1]; 
+
+      const startDiffX = Math.abs(userStart[0] - stdStroke.start[0]);
+      const startDiffY = Math.abs(userStart[1] - stdStroke.start[1]);
+      if (startDiffX > 10 || startDiffY > 10) {
+        return { isMatch: false, message: `第 ${i+1} 笔起点错误！` };
+      }
+
+      const endDiffX = Math.abs(userEnd[0] - stdStroke.end[0]);
+      const endDiffY = Math.abs(userEnd[1] - stdStroke.end[1]);
+      if (endDiffX > 10 || endDiffY > 10) {
+        return { isMatch: false, message: `第 ${i+1} 笔终点错误！` };
+      }
+
+      const stdDirVec = [stdStroke.end[0] - stdStroke.start[0], 
+                         stdStroke.end[1] - stdStroke.start[1]];
+      const userDirVec = [userEnd[0] - userStart[0], 
+                          userEnd[1] - userStart[1]];
+      const dot = stdDirVec[0] * userDirVec[0] + stdDirVec[1] * userDirVec[1];
+      const stdLen = Math.sqrt(stdDirVec[0]**2 + stdDirVec[1]**2);
+      const userLen = Math.sqrt(userDirVec[0]**2 + userDirVec[1]**2);
+      const cosTheta = dot / (stdLen * userLen);
+      const theta = Math.acos(cosTheta) * (180 / Math.PI); 
+      if (theta > 30) { 
+        return { isMatch: false, message: `第 ${i+1} 笔方向错误！` };
+      }
+    }
+
+    return { isMatch: true, message: "笔顺完全正确！" };
+  }
+
+  // ========== 流程控制 ==========
+  function nextCharacter() {
+    当前字 = 字库[Math.floor(Math.random() * 字库.length)];
+    当前笔划索引 = 0;
+    动画进度 = 0;
+    用户笔迹 = [];
+    resultDiv.innerHTML = "";
+    const writeCtx = writeCanvas.getContext("2d");
+    writeCtx.clearRect(0, 0, 300, 300);
+    initCanvas(writeCanvas); 
+    cancelAnimationFrame(动画帧); 
+    playAnimation();
+  }
+
+  nextBtn.addEventListener("click", nextCharacter);
+  checkBtn.addEventListener("click", () => {
+    const res = compareStrokes();
+    resultDiv.innerHTML = `<p style="color: ${res.isMatch ? 'green' : 'red'}">${res.message}</p>`;
+  });
+
+  window.onload = nextCharacter;
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉字笔顺练习</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>汉字笔顺练习</h1>
+        
+        <!-- 上半部分：笔顺演示 -->
+        <div class="demo-section">
+            <h2>标准笔顺演示</h2>
+            <div class="demo-area">
+                <canvas id="demoCanvas" width="300" height="300"></canvas>
+                <div class="demo-controls">
+                    <div class="current-character">
+                        <span id="currentChar">人</span>
+                    </div>
+                    <button id="replayBtn">重放动画</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 下半部分：用户练习 -->
+        <div class="practice-section">
+            <h2>练习区域</h2>
+            <div class="practice-area">
+                <canvas id="practiceCanvas" width="300" height="300"></canvas>
+                <div class="practice-controls">
+                    <button id="clearBtn">清除</button>
+                    <button id="checkBtn">检查笔顺</button>
+                    <button id="nextBtn">下一个字</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 结果显示 -->
+        <div class="result-section">
+            <div id="resultPanel" class="result-panel">
+                <h3>笔顺检查结果</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="character-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
